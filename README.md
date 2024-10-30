@@ -1,6 +1,6 @@
-# Project Title
+# Student-Report-App
 
-A brief description of your project and what it does.
+The Student Report App is a user-friendly platform designed to help students track their academic performance efficiently. With this app, students can easily access and view their grades, test scores, and progress over time.
 
 ## Table of Contents
 
