@@ -17,5 +17,9 @@ Follow these steps to get your development environment set up:
    Open your terminal and run the following command to clone the repo:
    ```bash
    git clone https://github.com/Student-Report-App/Student-Report-App.git
-   cd .\Student-Report-App\
+ 
+   cd .\Student-Report-App\\
+
    npm install 
+
+   cp .env.example .env
