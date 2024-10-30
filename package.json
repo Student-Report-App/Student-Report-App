@@ -1,7 +1,7 @@
 {
   "name": "student-report-app",
   "version": "1.0.0",
-  "description": "A web development project to help students track their academis progress and help them with easy access to there grades and testscores",
+  "description": "A web development project to help students track their academic progress and help them with easy access to their grades and testscores",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/Student-Report-App/Student-Report-App.git"
   },
-  "author": "prashilthul",
+  "author": "Student-Report-App",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Student-Report-App/Student-Report-App/issues"

@@ -5,7 +5,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const app = express();// Will integrate after recieving the frontend work 
 const mongoose = require('mongoose');
 
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGODB_URI)
     .then(() => {
         console.log("connected ");
     })
@@ -18,7 +18,7 @@ const dataSchema = new mongoose.Schema({
 }, {versionKey: false});
 
 const GET_ALL_USERNAME = () => {
-    const ALL_USERNAME = mongoose.model('Users', dataSchema);
+    const ALL_USERNAME = mongoose.model('Users', dataSchema, 'Users'); // Explicitly specify the collection name
     return ALL_USERNAME.find({}).lean()
 }
 
