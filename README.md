@@ -22,4 +22,4 @@ Follow these steps to get your development environment set up:
 
    npm install 
 
-   cp .env.example .env
+   cp sample.env .env
