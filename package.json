@@ -1,7 +1,7 @@
 {
   "name": "student-report-app",
   "version": "1.0.0",
-  "description": "A web development project to help students track their academic progress and help them with easy access to their grades and testscores",
+  "description": "A web development project to help students track their academic progress and help them with easy access to their grades and test scores",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
