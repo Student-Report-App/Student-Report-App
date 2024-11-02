@@ -41,7 +41,7 @@ const fetchAllUsers = async () => {
 // fetchAllUsers()
 //   .then((data) => console.log(data))
 //   .catch((err) => console.error(err));
-
+let currentUser = "";
 app.post("/auth/login", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -54,6 +54,7 @@ app.post("/auth/login", async (req, res) => {
     res.redirect("/error");
   } else {
     console.log("Authenticated");
+    currentUser = username;
     res.redirect("/dashboard");
   }
 });
@@ -63,7 +64,11 @@ app.get("/error", (req, res) => {
 });
 
 app.get("/dashboard", (req, res) => {
-  res.sendFile(__dirname + "/views/dashboard.html");
+  if (currentUser) {
+    res.sendFile(__dirname + "/views/dashboard.html");
+  } else {
+    res.redirect("/error")
+  }
 });
 
 const PORT = process.env.PORT ? process.env.PORT : 3000;
