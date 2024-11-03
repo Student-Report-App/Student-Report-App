@@ -33,18 +33,6 @@ const userSchema = new mongoose.Schema(
 
 const User = mongoose.model("User", userSchema);
 
-const fetchAllUsers = async () => {
-  try {
-    const data = await User.find();
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-// fetchAllUsers()
-//   .then((data) => console.log(data))
-//   .catch((err) => console.error(err));
 let currentUser = "";
 app.post("/auth/login", async (req, res) => {
   let email = req.body.email;
@@ -62,23 +50,8 @@ app.post("/auth/login", async (req, res) => {
   } else {
     console.log("Authenticated");
     currentUser = record.username;
-    //console.log(currentUser)
     res.redirect("/dashboard");
   }
-  app.post("/error", async (req, res) => {
-    email = "";
-    password = "";
-    record = "";
-    currentUser = "";
-
-    req.session.destroy((err) => {
-      if (err) {
-        return console.log(err);
-      } else {
-        res.redirect("/");
-      }
-    });
-  });
 });
 
 app.get("/error", (req, res) => {
@@ -91,6 +64,15 @@ app.get("/dashboard", (req, res) => {
   } else {
     res.redirect("/error");
   }
+});
+
+app.get("/404", (req, res) => {
+  res.sendFile(__dirname + "/views/404.html");
+});
+
+// Catch-all route handler for undefined routes
+app.use((req, res) => {
+  res.redirect("/404");
 });
 
 const PORT = process.env.PORT ? process.env.PORT : 3000;
