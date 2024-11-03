@@ -35,9 +35,15 @@ const User = mongoose.model("User", userSchema);
 
 let currentUser = "";
 app.post("/auth/login", async (req, res) => {
-  let email = req.body.email;
+  let login = req.body.login;
   let password = req.body.password;
-  let record = await User.findOne({ email: email });
+  let email_regex = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
+  let record;
+  if (login.match(email_regex)) {
+    record = await User.findOne({ email: login });
+  } else {
+    record = await User.findOne({ username: login });
+  }
 
   if (record === null) {
     console.log("Invalid Username");

@@ -8,12 +8,12 @@
     <div class="login-container">
       <form class="login-form" action="/auth/login" method="POST">
         <h2>Login</h2>
-        <label for="email">Email</label>
+        <label for="login">Username or Email</label>
         <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Enter your Email"
+          type="text"
+          name="login"
+          id="login"
+          placeholder="Username or Email"
           required
         />
         <label for="password">Password</label>
@@ -21,7 +21,7 @@
           type="password"
           name="password"
           id="password"
-          placeholder="Enter Password"
+          placeholder="Password"
           required
         />
         <button type="submit">Login</button>
