@@ -27,3 +27,18 @@ h1 {
   color: #c0392b;
   margin-bottom: 20px;
 }
+
+button {
+  background-color: #c0392b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #a93226;
+}

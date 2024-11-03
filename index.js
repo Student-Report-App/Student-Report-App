@@ -8,7 +8,11 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/views/index.html");
+  if (currentUser) {
+    res.redirect("/dashboard");
+  } else {
+    res.sendFile(__dirname + "/views/index.html");
+  }
 });
 
 mongoose
@@ -27,7 +31,7 @@ const userSchema = new mongoose.Schema(
   { versionKey: false, collection: "Users" }
 );
 
-User = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
 
 const fetchAllUsers = async () => {
   try {
@@ -43,20 +47,38 @@ const fetchAllUsers = async () => {
 //   .catch((err) => console.error(err));
 let currentUser = "";
 app.post("/auth/login", async (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  const record = await User.findOne({ username: username });
+  let email = req.body.email;
+  let password = req.body.password;
+  let record = await User.findOne({ email: email });
+
   if (record === null) {
     console.log("Invalid Username");
+    currentUser = "";
     res.redirect("/error");
   } else if (password !== record.password) {
     console.log("Invalid Password");
+    currentUser = "";
     res.redirect("/error");
   } else {
     console.log("Authenticated");
-    currentUser = username;
+    currentUser = record.username;
+    //console.log(currentUser)
     res.redirect("/dashboard");
   }
+  app.post("/error", async (req, res) => {
+    email = "";
+    password = "";
+    record = "";
+    currentUser = "";
+
+    req.session.destroy((err) => {
+      if (err) {
+        return console.log(err);
+      } else {
+        res.redirect("/");
+      }
+    });
+  });
 });
 
 app.get("/error", (req, res) => {
@@ -67,7 +89,7 @@ app.get("/dashboard", (req, res) => {
   if (currentUser) {
     res.sendFile(__dirname + "/views/dashboard.html");
   } else {
-    res.redirect("/error")
+    res.redirect("/error");
   }
 });
 
