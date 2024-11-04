@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+  </head>
+  <body>
+    <h2>Register</h2>
+    <form action="/auth/register" method="post">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required /><br /><br />
+
+      <label for="year">Year:</label>
+      <input type="radio" id="1st" name="year" value="1st" required />
+      <label for="1st">1st</label>
+      <input type="radio" id="2nd" name="year" value="2nd" required />
+      <label for="2nd">2nd</label>
+      <input type="radio" id="3rd" name="year" value="3rd" required />
+      <label for="3rd">3rd</label>
+      <input type="radio" id="4th" name="year" value="4th" required />
+      <label for="4th">4th</label><br /><br />
+
+      <label for="branch">Branch:</label>
+      <input type="radio" id="cse" name="branch" value="CSE" required />
+      <label for="cse">CSE</label>
+      <input type="radio" id="dsai" name="branch" value="DSAI" required />
+      <label for="dsai">DSAI</label>
+      <input type="radio" id="ece" name="branch" value="ECE" required />
+      <label for="ece">ECE</label><br /><br />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required /><br /><br />
+
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required /><br /><br />
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required />
+      <br /><br />
+
+      <input type="submit" value="Register" />
+    </form>
+  </body>
+</html>

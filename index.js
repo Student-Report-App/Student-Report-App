@@ -22,6 +22,7 @@ mongoose
 
 const userSchema = new mongoose.Schema(
   {
+    name: String,
     username: String,
     email: String,
     password: String,
@@ -35,9 +36,9 @@ const User = mongoose.model("User", userSchema);
 
 let currentUser = "";
 app.post("/auth/login", async (req, res) => {
-  let login = req.body.login;
-  let password = req.body.password;
-  let email_regex = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
+  const login = req.body.login;
+  const password = req.body.password;
+  const email_regex = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
   let record;
   if (login.match(email_regex)) {
     record = await User.findOne({ email: login });
@@ -69,6 +70,35 @@ app.get("/dashboard", (req, res) => {
     res.sendFile(__dirname + "/views/dashboard.html");
   } else {
     res.redirect("/error");
+  }
+});
+
+app.get("/register", (req, res) => {
+  res.sendFile(__dirname + "/views/register.html");
+});
+
+app.post("/auth/register", async (req, res) => {
+  if (await User.findOne({ email: req.body.email })) {
+    res.send("Email already registered");
+  } else if (await User.findOne({ username: req.body.username })) {
+    res.send("Username already taken");
+  } else {
+    const newUser = new User({
+      name: req.body.name,
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+      year: req.body.year,
+      branch: req.body.branch,
+    });
+    try {
+      const data = await newUser.save();
+      console.log("New User Registered with the following details:");
+      console.log(data)
+    } catch (error) {
+      console.log(error);
+    }
+    res.redirect("/");
   }
 });
 
