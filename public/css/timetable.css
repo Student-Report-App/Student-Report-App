@@ -1,149 +1,125 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #f5f5f5;
-    padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0f4f8;
+  padding: 20px;
 }
 
 .container {
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    width: 95%;
-    max-width: 1200px;
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 95%;
+  max-width: 1400px;
+  overflow-x: auto;
 }
 
 h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 30px;
-    font-size: 2.5em;
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-size: 2.5em;
+  font-weight: 600;
 }
 
 .timetable {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-.timetable th, .timetable td {
-    padding: 15px;
-    border: 1px solid #e0e0e0;
-    text-align: center;
-    font-size: 0.9em;
-}
-.timetable .header th {
-    background: #2c3e50;
-    color: white;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 1em;
-}
-.timetable td:first-child {
-    background: #34495e;
-    color: white;
-    font-weight: bold;
-}
-.subject {
-    background: #f8f9fa;
-    transition: all 0.3s ease;
-}
-
-.subject:hover {
-    background: #e9ecef;
-    transform: scale(1.02);
-}
-.subjectlunch:hover {
-    background: #ff7675;
-    transform: scale(1.02);
-}
-.subjectlab:hover {
-    background: #74b9ff;
-    transform: scale(1.02);
-}
-.timetable td:empty {
-    background: #f8f9fa;
-}
-.subjectlunch {
-    background: #ff7675;
-    color: white;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
-.subjectlab {
-    background: #74b9ff;
-    color: white;
-    transition: all 0.3s ease;
-}
-@media screen and (max-width: 768px) {
-    .container {
-        padding: 15px;
-        width: 100%;
-    }
-
-    .timetable th, .timetable td {
-        padding: 10px;
-        font-size: 0.8em;
-    }
-
-    h1 {
-        font-size: 1.8em;
-        margin-bottom: 20px;
-    }
-}
-.timetable tr:nth-child(even) {
-    background-color: #f8f9fa;
-}
-
-.timetable tr:hover {
-    background-color: #f1f3f5;
-}
-
-.timetable td[class*="Lab"] {
-    background: #74b9ff;
-    color: white;
-}
-
-.timetable td:contains("DLD") {
-    background: #a8e6cf;
-}
-
-.timetable td:contains("ITP") {
-    background: #ffd3b6;
-}
-.timetable {
-    border: 2px solid #2c3e50;
-    border-radius: 5px;
-    overflow: hidden;
-}
+.timetable th,
 .timetable td {
-    transition: all 0.3s ease;
+  padding: 15px;
+  text-align: center;
+  font-size: 0.9em;
+  border: 1px solid #e0e0e0;
+  font-weight: bold;
 }
-.container {
-    box-shadow: 
-        0 5px 15px rgba(0, 0, 0, 0.1),
-        0 15px 35px rgba(0, 0, 0, 0.05);
+
+.timetable .header th {
+  background: #2c3e50;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1em;
+  padding: 20px 15px;
 }
-@media print {
-    .container {
-        box-shadow: none;
-    }
 
-    body {
-        background: white;
-    }
+.timetable td:first-child {
+  background: #2c3e50;
+  color: white;
+  font-weight: bold;
+}
 
-    .timetable td, .timetable th {
-        border: 1px solid #000;
-    }
+.subject,
+.subjectlab,
+.lunch {
+  transition: all 0.3s ease;
+}
+
+.subject:hover,
+.subjectlab:hover,
+.lunch:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  position: relative;
+}
+
+.subject {
+  background: #ecf0f1;
+}
+
+.subjectlab {
+  background: #3498db;
+  color: white;
+}
+
+.lunch {
+  color: white;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.timetable tr:nth-child(2) .lunch,
+.timetable tr:nth-child(3) .lunch,
+.timetable tr:nth-child(4) .lunch,
+.timetable tr:nth-child(5) .lunch,
+.timetable tr:nth-child(6) .lunch {
+  background: #f39c12;
+}
+
+.go-back-btn {
+  display: block;
+  margin: 30px auto 0;
+  padding: 12px 24px;
+  font-size: 1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: white;
+  background: #2c3e50;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.go-back-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  background: #34495e;
 }
