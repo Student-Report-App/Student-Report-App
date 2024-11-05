@@ -37,7 +37,7 @@ router.post("/auth/logout", (req, res) => {
 });
 
 router.post("/auth/register", async (req, res) => {
-  const { name, username, email, password, year, branch } = req.body;
+  const { name, username, email, password, year, branch,roll} = req.body;
 
   if (await User.findOne({ email })) {
     return res.send("Email already registered");
@@ -51,12 +51,13 @@ router.post("/auth/register", async (req, res) => {
       password,
       year,
       branch,
+      roll
     });
 
     try {
       const data = await newUser.save();
-      console.log("New User Registered with the following details:");
-      console.log(data);
+      // console.log("New User Registered with the following details:");
+      // console.log(data);
       res.redirect("/");
     } catch (error) {
       console.log(error);

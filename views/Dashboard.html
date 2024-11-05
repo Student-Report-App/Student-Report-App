@@ -44,7 +44,10 @@
             </li>
             <li>
               <form action="/auth/logout" method="POST">
-                <a href="#" onclick="event.preventDefault(); this.closest('form').submit();">
+                <a
+                  href="#"
+                  onclick="event.preventDefault(); this.closest('form').submit();"
+                >
                   <i class="fas fa-sign-out-alt">Logout</i>
                 </a>
               </form>
@@ -55,7 +58,7 @@
       <main class="main-content">
         <header>
           <div class="header-content">
-            <h1>Welcome back, <span id='first-name'>Name</span></h1>
+            <h1>Welcome back, <span id="first-name">Name</span></h1>
             <p class="date" id="date">Date</p>
           </div>
           <div class="quick-stats">
