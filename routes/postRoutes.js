@@ -36,32 +36,35 @@ router.post("/auth/logout", (req, res) => {
   });
 });
 
+router.post("/auth/checkUsername", async (req, res) => {
+  const { username } = req.body;
+  const exists = await User.findOne({ username: username });
+  res.json({ exists: exists !== null });
+});
+
+router.post("/auth/checkEmail", async (req, res) => {
+  const { email } = req.body;
+  const exists = await User.findOne({ email: email });
+  res.json({ exists: exists !== null });
+});
+
 router.post("/auth/register", async (req, res) => {
-  const { name, username, email, password, year, branch,roll} = req.body;
+  const { name, username, email, password, year, branch, roll } = req.body;
+  const newUser = new User({
+    name,
+    username,
+    email,
+    password,
+    year,
+    branch,
+    roll,
+  });
 
-  if (await User.findOne({ email })) {
-    return res.send("Email already registered");
-  } else if (await User.findOne({ username })) {
-    return res.send("Username already taken");
-  } else {
-    const newUser = new User({
-      name,
-      username,
-      email,
-      password,
-      year,
-      branch,
-      roll
-    });
-
-    try {
-      const data = await newUser.save();
-      // console.log("New User Registered with the following details:");
-      // console.log(data);
-      res.redirect("/");
-    } catch (error) {
-      console.log(error);
-    }
+  try {
+    const data = await newUser.save();
+    res.redirect("/");
+  } catch (error) {
+    console.log(error);
   }
 });
 

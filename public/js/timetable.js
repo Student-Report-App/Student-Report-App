@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
   fetch("/api/timetable/CSE")
     .then((response) => response.json())
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           subjectCells.forEach((cell, index) => {
             const subject = subjects[index];
-            if (subject && subject !== "NULL") {
+            if (subject && subject !== null) {
               cell.textContent = subject;
             } else {
               cell.textContent = "Free";

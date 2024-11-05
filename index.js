@@ -1,12 +1,13 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
 const session = require("express-session");
+
 const app = express();
 
+app.use(express.json());
 app.use(express.static("public"));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "test", // Secret key for session encryption
