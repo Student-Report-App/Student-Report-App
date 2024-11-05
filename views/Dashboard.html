@@ -43,7 +43,11 @@
               <a href="#"><i class="fas fa-cog"></i> Settings</a>
             </li>
             <li>
-              <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+              <form action="/auth/logout" method="POST">
+                <a href="#" onclick="event.preventDefault(); this.closest('form').submit();">
+                  <i class="fas fa-sign-out-alt">Logout</i>
+                </a>
+              </form>
             </li>
           </ul>
         </nav>
