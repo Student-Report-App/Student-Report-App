@@ -21,7 +21,7 @@ router.post("/auth/login", async (req, res) => {
     res.redirect("/error");
   } else {
     console.log("Authenticated");
-    req.session.user = { username: record.username }; // Store user in session
+    req.session.user = record; // Store entire user record in session
     res.redirect("/dashboard");
   }
 });

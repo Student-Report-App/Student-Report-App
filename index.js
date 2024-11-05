@@ -28,7 +28,9 @@ mongoose
 // Import routes
 const getRoutes = require("./routes/getRoutes");
 const postRoutes = require("./routes/postRoutes");
+const apiRoutes = require("./routes/apiRoutes");
 
+app.use(apiRoutes);
 app.use(getRoutes);
 app.use(postRoutes);
 
