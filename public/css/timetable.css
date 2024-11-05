@@ -1,0 +1,149 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f5f5f5;
+    padding: 20px;
+}
+
+.container {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 95%;
+    max-width: 1200px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+}
+
+.timetable {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.timetable th, .timetable td {
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    text-align: center;
+    font-size: 0.9em;
+}
+.timetable .header th {
+    background: #2c3e50;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 1em;
+}
+.timetable td:first-child {
+    background: #34495e;
+    color: white;
+    font-weight: bold;
+}
+.subject {
+    background: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+.subject:hover {
+    background: #e9ecef;
+    transform: scale(1.02);
+}
+.subjectlunch:hover {
+    background: #ff7675;
+    transform: scale(1.02);
+}
+.subjectlab:hover {
+    background: #74b9ff;
+    transform: scale(1.02);
+}
+.timetable td:empty {
+    background: #f8f9fa;
+}
+.subjectlunch {
+    background: #ff7675;
+    color: white;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+.subjectlab {
+    background: #74b9ff;
+    color: white;
+    transition: all 0.3s ease;
+}
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 15px;
+        width: 100%;
+    }
+
+    .timetable th, .timetable td {
+        padding: 10px;
+        font-size: 0.8em;
+    }
+
+    h1 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+    }
+}
+.timetable tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.timetable tr:hover {
+    background-color: #f1f3f5;
+}
+
+.timetable td[class*="Lab"] {
+    background: #74b9ff;
+    color: white;
+}
+
+.timetable td:contains("DLD") {
+    background: #a8e6cf;
+}
+
+.timetable td:contains("ITP") {
+    background: #ffd3b6;
+}
+.timetable {
+    border: 2px solid #2c3e50;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.timetable td {
+    transition: all 0.3s ease;
+}
+.container {
+    box-shadow: 
+        0 5px 15px rgba(0, 0, 0, 0.1),
+        0 15px 35px rgba(0, 0, 0, 0.05);
+}
+@media print {
+    .container {
+        box-shadow: none;
+    }
+
+    body {
+        background: white;
+    }
+
+    .timetable td, .timetable th {
+        border: 1px solid #000;
+    }
+}
