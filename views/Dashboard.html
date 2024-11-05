@@ -3,13 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
     <title>Educational Dashboard</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
   </head>
   <body>
     <div class="container">
@@ -20,8 +19,8 @@
             alt="Profile Picture"
             class="profile-pic"
           />
-          <h3>Pratyush Krishna Yadav</h3>
-          <p>Student ID: 241000064</p>
+          <h3 id="name">Pratyush Krishna Yadav</h3>
+          <p>Student ID: <span id="roll">241000064</span></p>
         </div>
         <nav>
           <ul>
@@ -53,7 +52,7 @@
         <header>
           <div class="header-content">
             <h1>Welcome back, Pratyush</h1>
-            <p class="date">Tuesday, November 5, 2024</p>
+            <p class="date" id="date">Tuesday, November 5, 2024</p>
           </div>
           <div class="quick-stats">
             <div class="stat-card">
@@ -126,5 +125,6 @@
         </section>
       </main>
     </div>
+    
   </body>
 </html>
