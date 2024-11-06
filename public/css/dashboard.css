@@ -173,3 +173,11 @@ header {
     text-transform: capitalize;
     letter-spacing: 0.5px;
 }
+
+
+.todays-classes .class-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  position: relative;
+}
