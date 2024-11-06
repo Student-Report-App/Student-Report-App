@@ -3,6 +3,7 @@ const roll = document.getElementById("roll");
 const firstName = document.getElementById("first-name");
 const currentDate = document.getElementById("current-date");
 const logoutBtn = document.getElementById("logout");
+const classes = Array.from(document.querySelectorAll(".class-item"));
 
 logoutBtn.addEventListener("click", () => {
   fetch("/auth/logout", {
@@ -107,4 +108,26 @@ fetch(`/api/timetable/CSE/${today}`)
       currentClass.style.color = "#fff";
       currentClass.style.backgroundColor = "#2c3e50";
     }
+
+    classes.forEach((item) => {
+      item.style.transition = "width 0.3s ease, height 0.3s ease";
+      item.addEventListener("mouseover", () => {
+        item.style.height = "100px";
+        item.style.width = "150px";
+        classes.forEach((otherItem) => {
+          if (otherItem !== item) {
+          }
+        });
+      });
+
+      item.addEventListener("mouseout", () => {
+        item.style.height = "30px";
+        item.style.width = "30px";
+
+        classes.forEach((otherItem) => {
+          item.style.height = "30px";
+          item.style.width = "30px";
+        });
+      });
+    });
   });
