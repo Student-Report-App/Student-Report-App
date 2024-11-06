@@ -11,4 +11,4 @@ fetch("/api/userdata")
     firstName.textContent = data.name.split(" ")[0];
   });
 
-date.textContent = new Date().toDateString();
+Currentdate.textContent = new Date().toDateString();

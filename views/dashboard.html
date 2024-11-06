@@ -24,24 +24,12 @@
         </div>
         <nav>
           <ul>
-            <li>
-              <a href="#"><i class="fas fa-home"></i> Home</a>
-            </li>
-            <li>
-              <a href="/timetable"><i class="fas fa-book"></i> Timetable</a>
-            </li>
-            <li>
-              <a href="#"><i class="fas fa-tasks"></i> Assignments</a>
-            </li>
-            <li>
-              <a href="#"><i class="fas fa-chart-bar"></i> Grades</a>
-            </li>
-            <li>
-              <a href="#"><i class="fas fa-user"></i> Profile</a>
-            </li>
-            <li>
-              <a href="#"><i class="fas fa-cog"></i> Settings</a>
-            </li>
+            <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/timetable"><i class="fa-solid fa-list"></i> Timetable</a></li>
+            <li><a href="#"><i class="fas fa-tasks"></i> Assignments</a></li>
+            <li><a href="#"><i class="fas fa-chart-bar"></i> Grades</a></li>
+            <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
             <li>
               <form action="/auth/logout" method="POST">
                 <a
@@ -59,7 +47,7 @@
         <header>
           <div class="header-content">
             <h1>Welcome back, <span id="first-name">Name</span></h1>
-            <p class="date" id="date">Date</p>
+            <p class="date" id="Currentdate">Date</p>
           </div>
           <div class="quick-stats">
             <div class="stat-card">
@@ -72,6 +60,19 @@
             </div>
           </div>
         </header>
+
+        <section class="todays-classes">
+          <h3><i class="fas fa-calendar-day"></i> Today's Classes</h3>
+          <div class="class-item" id="1"><span>LAMA</span></div>
+          <div class="class-item" id="2"><span>ITP</span></div>
+          <div class="class-item" id="3"><span>ILC</span></div>
+          <div class="class-item" id="4"><span>DM</span></div>
+          <div class="class-item" id="5"><span>SD</span></div>
+          <div class="class-item" id="6"><span>SNA</span></div>
+          <div class="class-item" id="7"><span>SNA</span></div>
+          <div class="class-item" id="8"><span>Free</span></div>
+        </section>
+
         <section class="cards">
           <div class="card assignments">
             <h3><i class="fas fa-tasks"></i> Upcoming Assignments</h3>
