@@ -12,11 +12,10 @@ const checkExists = async (type, value) => {
     });
 
     const data = await response.json();
-    if (!data.exists) {
-      errorMessage.innerText = `${type} not found in database`;
-      return false;
+    if (data.exists) {
+      return true;
     }
-    return true;
+    return false;
   } catch (error) {
     errorMessage.innerText = "An error occurred while checking the database";
     return false;
@@ -34,11 +33,10 @@ const passwordMatch = async (login, password, loginType) => {
     });
 
     const data = await response.json();
-    if (!data.match) {
-      errorMessage.innerText = "Password is incorrect";
-      return false;
+    if (data.match) {
+      return true;
     }
-    return true;
+    return false;
   } catch (error) {
     errorMessage.innerText = "An error occurred while checking the password";
     return false;

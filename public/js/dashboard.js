@@ -1,7 +1,9 @@
 const nameElement = document.getElementById("name");
 const roll = document.getElementById("roll");
 const firstName = document.getElementById("first-name");
-const date = document.getElementById("date");
+const currentDate = document.getElementById("current-date");
+
+const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
 fetch("/api/userdata")
   .then((response) => response.json())
@@ -11,4 +13,20 @@ fetch("/api/userdata")
     firstName.textContent = data.name.split(" ")[0];
   });
 
-Currentdate.textContent = new Date().toDateString();
+currentDate.textContent = new Date().toDateString();
+
+const today = days[new Date().getDay() - 1];
+const classItems = Array.from(document.querySelectorAll(".class-item"));
+fetch(`/api/timetable/CSE/${today}`)
+  .then((response) => response.json())
+  .then((data) => {
+    classItems.forEach((item, index) => {
+      const subject = data[index];
+      if (subject && subject !== null) {
+        item.textContent = subject;
+      } else {
+        item.textContent = "Free";
+        item.style.backgroundColor = "#16E838";
+      }
+    });
+  });
