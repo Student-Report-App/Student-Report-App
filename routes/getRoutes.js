@@ -10,15 +10,11 @@ router.get("/", (req, res) => {
   }
 });
 
-router.get("/error", (req, res) => {
-  res.sendFile(path.join(__dirname, "/../views/error.html"));
-});
-
 router.get("/dashboard", (req, res) => {
   if (req.session.user) {
     res.sendFile(path.join(__dirname, "/../views/dashboard.html"));
   } else {
-    res.redirect("/error");
+    res.redirect("/404");
   }
 });
 
