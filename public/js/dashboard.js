@@ -2,6 +2,13 @@ const nameElement = document.getElementById("name");
 const roll = document.getElementById("roll");
 const firstName = document.getElementById("first-name");
 const currentDate = document.getElementById("current-date");
+const logoutBtn = document.getElementById("logout");
+
+logoutBtn.addEventListener("click", () => {
+  fetch("/auth/logout", {
+    method: "POST",
+  }).then(() => location.href = "/");
+});
 
 const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
