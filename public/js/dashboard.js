@@ -4,6 +4,7 @@ const firstName = document.getElementById("first-name");
 const currentDate = document.getElementById("current-date");
 const logoutBtn = document.getElementById("logout");
 const classes = Array.from(document.querySelectorAll(".class-item"));
+const hoverBox = document.getElementById("hover-box");
 
 logoutBtn.addEventListener("click", () => {
   fetch("/auth/logout", {
@@ -110,24 +111,22 @@ fetch(`/api/timetable/CSE/${today}`)
     }
 
     classes.forEach((item) => {
-      item.style.transition = "width 0.3s ease, height 0.3s ease";
-      item.addEventListener("mouseover", () => {
-        item.style.height = "100px";
-        item.style.width = "150px";
-        classes.forEach((otherItem) => {
-          if (otherItem !== item) {
-          }
-        });
+      item.addEventListener("mouseover", (event) => {
+        hoverBox.style.display = "block";
+        hoverBox.style.top = `${event.target.offsetTop + event.target.offsetHeight + 20}px`;
+        hoverBox.style.left = `${event.target.offsetLeft + (event.target.offsetWidth / 2) - (hoverBox.offsetWidth / 2)}px`;
+        hoverBox.innerHTML = `More Information for ${event.target.textContent}<br>Info 1<br>Info 2<br>Info 3`;
+
+        const arrow = document.createElement("div");
+        arrow.classList.add("hover-box-arrow");
+        hoverBox.appendChild(arrow);
+
+        hoverBox.style.left = `${event.target.offsetLeft + (event.target.offsetWidth / 2) - (hoverBox.offsetWidth / 2)}px`;
       });
 
       item.addEventListener("mouseout", () => {
-        item.style.height = "30px";
-        item.style.width = "30px";
-
-        classes.forEach((otherItem) => {
-          item.style.height = "30px";
-          item.style.width = "30px";
-        });
+        hoverBox.style.display = "none";
+        hoverBox.innerHTML = "";
       });
     });
   });

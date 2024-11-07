@@ -23,8 +23,8 @@ const updateYearAndBranch = () => {
   };
   const branchMap = {
     0: "cse",
-    2: "ece",
-    4: "dsai",
+    1: "ece",
+    2: "dsai",
   };
 
   if (yearMap[year]) {
