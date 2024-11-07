@@ -111,6 +111,8 @@ header {
 }
 
 .card {
+  animation: fadeIn 1s ease-out;
+
   background: white;
   padding: 25px;
   border-radius: 10px;
@@ -184,4 +186,20 @@ header {
   font-size: 0.9em;
   color: #fff;
   text-align: center;
+}
+
+.class-item{
+  animation: fadeIn 1s ease-out;
+
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
