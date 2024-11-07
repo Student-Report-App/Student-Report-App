@@ -36,7 +36,6 @@ currentDate.textContent = new Date().toDateString();
 
 const today = days[new Date().getDay()];
 const classItems = Array.from(document.querySelectorAll(".class-item"));
-console.log(today);
 fetch(`/api/timetable/CSE/${today}`)
   .then((response) => response.json())
   .then((data) => {
@@ -51,7 +50,6 @@ fetch(`/api/timetable/CSE/${today}`)
     });
 
     const hour = new Date().getHours();
-    console.log(hour);
 
     let timeSlot;
     switch (true) {
@@ -150,7 +148,6 @@ fetch(`/api/timetable/CSE/${today}`)
             });
         } else {
           hoverBox.innerHTML = "This class is free. Enjoy!";
-          
         }
 
         hoverBox.style.left = `${
