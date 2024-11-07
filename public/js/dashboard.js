@@ -36,6 +36,9 @@ currentDate.textContent = new Date().toDateString();
 
 const today = days[new Date().getDay()];
 const classItems = Array.from(document.querySelectorAll(".class-item"));
+
+let subjectData = {};
+
 fetch(`/api/timetable/CSE/${today}`)
   .then((response) => response.json())
   .then((data) => {
@@ -43,10 +46,59 @@ fetch(`/api/timetable/CSE/${today}`)
       const subject = data[index];
       if (subject && subject !== null) {
         item.textContent = subject;
+        subjectData[subject] = null;
       } else {
         item.textContent = "Free";
         item.style.backgroundColor = "#16E838";
       }
+    });
+
+    const subjectPromises = Object.keys(subjectData).map((subject) =>
+      fetch(`/api/subject/${branch.textContent}/${subject}`)
+        .then((response) => response.json())
+        .then((data) => {
+          subjectData[subject] = data;
+        })
+    );
+
+    Promise.all(subjectPromises).then(() => {
+      classes.forEach((item) => {
+        item.addEventListener("mouseover", (event) => {
+          hoverBox.style.display = "block";
+          hoverBox.style.top = `${
+            event.target.offsetTop + event.target.offsetHeight + 20
+          }px`;
+          hoverBox.style.left = `${
+            event.target.offsetLeft +
+            event.target.offsetWidth / 2 -
+            hoverBox.offsetWidth / 2
+          }px`;
+
+          const subject = event.target.innerText;
+          if (subject !== "Free" && subjectData[subject]) {
+            const data = subjectData[subject];
+            hoverBox.innerHTML = `
+              ${data.title} <br>
+              Credits: <strong>${data.credit}</strong> <br>
+              ${data.lecturer} <br>
+              Code: <strong>${data.code}</strong>
+            `;
+          } else {
+            hoverBox.innerHTML = "This class is free. Enjoy!";
+          }
+
+          hoverBox.style.left = `${
+            event.target.offsetLeft +
+            event.target.offsetWidth / 2 -
+            hoverBox.offsetWidth / 2
+          }px`;
+        });
+
+        item.addEventListener("mouseout", () => {
+          hoverBox.style.display = "none";
+          hoverBox.innerHTML = "";
+        });
+      });
     });
 
     const hour = new Date().getHours();
@@ -129,7 +181,7 @@ fetch(`/api/timetable/CSE/${today}`)
           event.target.offsetWidth / 2 -
           hoverBox.offsetWidth / 2
         }px`;
-        
+
         if (event.target.innerText !== "Free") {
           fetch(`/api/subject/${branch.textContent}/${event.target.innerText}`)
             .then((response) => response.json())
