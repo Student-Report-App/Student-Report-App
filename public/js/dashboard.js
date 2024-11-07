@@ -1,6 +1,7 @@
 const nameElement = document.getElementById("name");
 const roll = document.getElementById("roll");
 const firstName = document.getElementById("first-name");
+const branch = document.getElementById("branch");
 const currentDate = document.getElementById("current-date");
 const logoutBtn = document.getElementById("logout");
 const classes = Array.from(document.querySelectorAll(".class-item"));
@@ -12,7 +13,15 @@ logoutBtn.addEventListener("click", () => {
   }).then(() => (location.href = "/"));
 });
 
-const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 
 fetch("/api/userdata")
   .then((response) => response.json())
@@ -20,6 +29,7 @@ fetch("/api/userdata")
     nameElement.textContent = data.name;
     roll.textContent = data.roll;
     firstName.textContent = data.name.split(" ")[0];
+    branch.textContent = data.branch;
   });
 
 currentDate.textContent = new Date().toDateString();
@@ -113,15 +123,41 @@ fetch(`/api/timetable/CSE/${today}`)
     classes.forEach((item) => {
       item.addEventListener("mouseover", (event) => {
         hoverBox.style.display = "block";
-        hoverBox.style.top = `${event.target.offsetTop + event.target.offsetHeight + 20}px`;
-        hoverBox.style.left = `${event.target.offsetLeft + (event.target.offsetWidth / 2) - (hoverBox.offsetWidth / 2)}px`;
-        hoverBox.innerHTML = `More Information for ${event.target.textContent}<br>Info 1<br>Info 2<br>Info 3`;
+        hoverBox.style.top = `${
+          event.target.offsetTop + event.target.offsetHeight + 20
+        }px`;
+        hoverBox.style.left = `${
+          event.target.offsetLeft +
+          event.target.offsetWidth / 2 -
+          hoverBox.offsetWidth / 2
+        }px`;
+        
+        if (event.target.innerText !== "Free") {
+          fetch(`/api/subject/${branch.textContent}/${event.target.innerText}`)
+            .then((response) => response.json())
+            .then((data) => {
+              hoverBox.innerHTML = `
+                ${data.title} <br>
+                Credits: <strong>${data.credit}</strong> <br>
+                ${data.lecturer} <br>
+                Code: <strong>${data.code}</strong>
+              `;
+              hoverBox.style.left = `${
+                event.target.offsetLeft +
+                event.target.offsetWidth / 2 -
+                hoverBox.offsetWidth / 2
+              }px`;
+            });
+        } else {
+          hoverBox.innerHTML = "This class is free. Enjoy!";
+          
+        }
 
-        const arrow = document.createElement("div");
-        arrow.classList.add("hover-box-arrow");
-        hoverBox.appendChild(arrow);
-
-        hoverBox.style.left = `${event.target.offsetLeft + (event.target.offsetWidth / 2) - (hoverBox.offsetWidth / 2)}px`;
+        hoverBox.style.left = `${
+          event.target.offsetLeft +
+          event.target.offsetWidth / 2 -
+          hoverBox.offsetWidth / 2
+        }px`;
       });
 
       item.addEventListener("mouseout", () => {

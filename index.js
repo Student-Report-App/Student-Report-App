@@ -35,7 +35,6 @@ app.use(apiRoutes);
 app.use(getRoutes);
 app.use(postRoutes);
 
-// Catch-all route handler for undefined routes
 app.use((req, res) => {
   res.redirect("/404");
 });
