@@ -78,7 +78,7 @@ fetch(`/api/timetable/CSE/${today}`)
           if (subject !== "Free" && subjectData[subject]) {
             const data = subjectData[subject];
             hoverBox.innerHTML = `
-              ${data.title} <br>
+              <strong>${data.title}</strong> <br>
               Credits: <strong>${data.credit}</strong> <br>
               ${data.lecturer} <br>
               Code: <strong>${data.code}</strong>
@@ -102,116 +102,13 @@ fetch(`/api/timetable/CSE/${today}`)
     });
 
     const hour = new Date().getHours();
+    const timeSlots = [9, 10, 11, 12, 14, 15, 16, 17];
+    const timeSlot = timeSlots.findIndex(slot => hour >= slot && hour < slot + 1) + 1 || null;
 
-    let timeSlot;
-    switch (true) {
-      case 9 <= hour && hour < 10:
-        timeSlot = 1;
-        break;
-      case 10 <= hour && hour < 11:
-        timeSlot = 2;
-        break;
-      case 11 <= hour && hour < 12:
-        timeSlot = 3;
-        break;
-      case 12 <= hour && hour < 13:
-        timeSlot = 4;
-        break;
-      case 14 <= hour && hour < 15:
-        timeSlot = 5;
-        break;
-      case 15 <= hour && hour < 16:
-        timeSlot = 6;
-        break;
-      case 16 <= hour && hour < 17:
-        timeSlot = 7;
-        break;
-      case 17 <= hour && hour < 18:
-        timeSlot = 8;
-        break;
-      default:
-        timeSlot = null;
-        break;
-    }
-
-    let currentClass;
-    switch (timeSlot) {
-      case 1:
-        currentClass = document.getElementById("1");
-        break;
-      case 2:
-        currentClass = document.getElementById("2");
-        break;
-      case 3:
-        currentClass = document.getElementById("3");
-        break;
-      case 4:
-        currentClass = document.getElementById("4");
-        break;
-      case 5:
-        currentClass = document.getElementById("5");
-        break;
-      case 6:
-        currentClass = document.getElementById("6");
-        break;
-      case 7:
-        currentClass = document.getElementById("7");
-        break;
-      case 8:
-        currentClass = document.getElementById("8");
-        break;
-      default:
-        currentClass = null;
-        break;
-    }
+    const currentClass = document.getElementById(timeSlot);
 
     if (currentClass && currentClass.innerText !== "Free") {
       currentClass.style.color = "#fff";
       currentClass.style.backgroundColor = "#2c3e50";
     }
-
-    classes.forEach((item) => {
-      item.addEventListener("mouseover", (event) => {
-        hoverBox.style.display = "block";
-        hoverBox.style.top = `${
-          event.target.offsetTop + event.target.offsetHeight + 20
-        }px`;
-        hoverBox.style.left = `${
-          event.target.offsetLeft +
-          event.target.offsetWidth / 2 -
-          hoverBox.offsetWidth / 2
-        }px`;
-
-        if (event.target.innerText !== "Free") {
-          fetch(`/api/subject/${branch.textContent}/${event.target.innerText}`)
-            .then((response) => response.json())
-            .then((data) => {
-              hoverBox.innerHTML = `
-                ${data.title} <br>
-                Credits: <strong>${data.credit}</strong> <br>
-                ${data.lecturer} <br>
-                Code: <strong>${data.code}</strong>
-              `;
-              hoverBox.style.left = `${
-                event.target.offsetLeft +
-                event.target.offsetWidth / 2 -
-                hoverBox.offsetWidth / 2
-              }px`;
-            });
-        } else {
-          hoverBox.innerHTML = "This class is free. Enjoy!";
-        }
-
-        hoverBox.style.left = `${
-          event.target.offsetLeft +
-          event.target.offsetWidth / 2 -
-          hoverBox.offsetWidth / 2
-        }px`;
-      });
-
-      item.addEventListener("mouseout", () => {
-        hoverBox.style.display = "none";
-        hoverBox.innerHTML = "";
-      });
-    });
   });

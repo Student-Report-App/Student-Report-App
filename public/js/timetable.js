@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const subject = subjects[index];
             if (subject && subject !== null) {
               cell.textContent = subject;
-              // Save subject details for later use
               fetch(`/api/subject/CSE/${subject}`)
                 .then((response) => response.json())
                 .then((subjectDetails) => {
@@ -49,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (subject !== "Free") {
             const data = subjectData[subject];
             hoverBox.innerHTML = `
-              ${data.title} <br>
+              <strong>${data.title}</strong> <br>
               Credits: <strong>${data.credit}</strong> <br>
               ${data.lecturer} <br>
               Code: <strong>${data.code}</strong>

@@ -27,7 +27,11 @@ router.get("/404", (req, res) => {
 });
 
 router.get("/timetable", (req, res) => {
-  res.sendFile(path.join(__dirname, "/../views/timetable.html"));
+  if (req.session.user) {
+    res.sendFile(path.join(__dirname, "/../views/timetable.html"));
+  } else {
+    res.redirect("/404");
+  }
 });
 
 module.exports = router;
