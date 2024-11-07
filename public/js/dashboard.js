@@ -11,7 +11,7 @@ logoutBtn.addEventListener("click", () => {
   }).then(() => (location.href = "/"));
 });
 
-const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 fetch("/api/userdata")
   .then((response) => response.json())
@@ -23,9 +23,9 @@ fetch("/api/userdata")
 
 currentDate.textContent = new Date().toDateString();
 
-const today = days[new Date().getDay() - 1];
+const today = days[new Date().getDay()];
 const classItems = Array.from(document.querySelectorAll(".class-item"));
-
+console.log(today);
 fetch(`/api/timetable/CSE/${today}`)
   .then((response) => response.json())
   .then((data) => {
