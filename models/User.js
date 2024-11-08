@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema(
     password: String,
     year: String,
     branch: String,
-    roll: Number
+    roll: Number,
+    division: String
   },
   { versionKey: false, collection: "Users" }
 );

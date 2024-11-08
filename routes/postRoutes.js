@@ -54,7 +54,7 @@ router.post("/auth/checkPassword", async (req, res) => {
 });
 
 router.post("/auth/register", async (req, res) => {
-  const { name, username, email, password, year, branch, roll } = req.body;
+  const { name, username, email, password, year, branch, roll, division } = req.body;
   const newUser = new User({
     name,
     username,
@@ -63,6 +63,7 @@ router.post("/auth/register", async (req, res) => {
     year,
     branch,
     roll,
+    division
   });
 
   try {

@@ -70,9 +70,17 @@ email.addEventListener("input", async () => {
 
 submitBtn.addEventListener("click", async (e) => {
   e.preventDefault();
-  const isUsernameTaken = await checkExists("Username", username.value);
-  const isEmailTaken = await checkExists("Email", email.value);
-  if (!isUsernameTaken && !isEmailTaken) {
-    document.getElementById("register-form").submit();
+  if (
+    fullName.value.trim() !== "" &&
+    roll.value.trim() !== "" &&
+    username.value.trim() !== "" &&
+    email.value.trim() !== ""
+  ) {
+    const isUsernameTaken = await checkExists("Username", username.value);
+    const isEmailTaken = await checkExists("Email", email.value);
+    if (!isUsernameTaken && !isEmailTaken)
+      document.getElementById("register-form").submit();
+  } else {
+    errorMessage.innerText = "Please fill in all fields.";
   }
 });
