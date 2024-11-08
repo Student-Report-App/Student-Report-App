@@ -11,10 +11,21 @@ router.get("/api/userdata", (req, res) => {
   res.json(req.session.user);
 });
 
-router.get("/api/timetable/:branch", async (req, res) => {
+router.get("/api/timetable/branch/:branch", async (req, res) => {
   try {
     const timetable = await Timetable.findOne({
       Branch: req.params.branch.toUpperCase(),
+    });
+    res.json(timetable);
+  } catch (err) {
+    res.send(err);
+  }
+});
+
+router.get("/api/timetable/division/:division", async (req, res) => {
+  try {
+    const timetable = await Timetable.findOne({
+      Division: req.params.division.toUpperCase(),
     });
     res.json(timetable);
   } catch (err) {
