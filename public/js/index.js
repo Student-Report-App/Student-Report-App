@@ -1,5 +1,6 @@
 const loginBtn = document.getElementById("login-btn");
 const errorMessage = document.getElementById("error-message");
+const remember = document.getElementById("remember");
 
 const checkExists = async (type, value) => {
   try {
@@ -22,14 +23,14 @@ const checkExists = async (type, value) => {
   }
 };
 
-const passwordMatch = async (login, password, loginType) => {
+const passwordMatch = async (login, password, loginType, checked) => {
   try {
     const response = await fetch("/auth/checkPassword", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ login, password, loginType }),
+      body: JSON.stringify({ login, password, loginType, checked }),
     });
 
     const data = await response.json();
@@ -53,7 +54,7 @@ const handleLogin = async (e) => {
 
   if (exists) {
     const password = document.getElementById("password").value;
-    const passwordMatched = await passwordMatch(login, password, loginType);
+    const passwordMatched = await passwordMatch(login, password, loginType, remember.checked);
     if (passwordMatched) {
       document.getElementById("login-form").submit();
     } else {
