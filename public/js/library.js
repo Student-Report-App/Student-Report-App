@@ -23,16 +23,13 @@ function displayBooks(books) {
 function createBookCard(book) {
   const card = document.createElement("div");
   card.className = "card";
+  card.onclick = function () {
+    window.open(book.Link, "_blank");
+  };
 
   const title = document.createElement("h1");
   title.textContent = book.Name;
   card.appendChild(title);
 
-  const link = document.createElement("a");
-  link.href = book.Link;
-  link.innerHTML = "Open";
-  link.className = "open-btn";
-  link.target = "_blank";
-  card.appendChild(link);
   return card;
 }

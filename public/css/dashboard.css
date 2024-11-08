@@ -13,7 +13,7 @@ body {
   width: 250px;
   background: #2c3e50;
   color: #fff;
-  height: 100vh;
+  height: 100%;
   position: fixed;
   padding: 20px 0;
 }
