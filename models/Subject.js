@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const subjectSchema = new mongoose.Schema(
   {
-    branch: String,
+    Branch: String,
     PNS: {
       credit: Number,
       title: String,
@@ -40,6 +40,24 @@ const subjectSchema = new mongoose.Schema(
       code: String,
     },
     SNA: {
+      credit: Number,
+      title: String,
+      lecturer: String,
+      code: String,
+    },
+    ILC: {
+      credit: Number,
+      title: String,
+      lecturer: String,
+      code: String,
+    },
+    SHV: {
+      credit: Number,
+      title: String,
+      lecturer: String,
+      code: String,
+    },
+    EVS: {
       credit: Number,
       title: String,
       lecturer: String,

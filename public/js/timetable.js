@@ -1,11 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
   const subjectData = {};
-
-  fetch("/api/timetable/CSE")
+  let branch;
+  fetch("/api/userdata")
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
+      branch = data.branch;
+      return fetch(`/api/timetable/${branch}`);
+    })
+    .then((response) => response.json())
+    .then((data) => {
       days.forEach((day) => {
         const subjects = data[day];
 
@@ -24,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const subject = subjects[index];
             if (subject && subject !== null) {
               cell.textContent = subject;
-              fetch(`/api/subject/CSE/${subject}`)
+              fetch(`/api/subject/${branch}/${subject}`)
                 .then((response) => response.json())
                 .then((subjectDetails) => {
                   subjectData[subject] = subjectDetails;

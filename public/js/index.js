@@ -60,7 +60,7 @@ const handleLogin = async (e) => {
       errorMessage.innerText = "The password you entered is incorrect";
     }
   } else {
-    errorMessage.innerText = `This ${loginType} is not associated with any account on our platform`;
+    errorMessage.innerText = `${loginType} not found`;
   }
 };
 

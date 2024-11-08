@@ -111,7 +111,7 @@ header {
 }
 
 .card {
-  animation: fadeIn 1s ease-out;
+  animation: fadeIn 0.5s ease-out;
 
   background: white;
   padding: 25px;
@@ -189,7 +189,7 @@ header {
 }
 
 .class-item{
-  animation: fadeIn 1s ease-out;
+  animation: fadeIn 0.5s ease-out;
 
 }
 
