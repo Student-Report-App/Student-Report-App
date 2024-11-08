@@ -34,4 +34,12 @@ router.get("/timetable", (req, res) => {
   }
 });
 
+router.get("/library", (req, res) => {
+  if (req.session.user) {
+    res.sendFile(path.join(__dirname, "/../views/library.html"));
+  } else {
+    res.redirect("/404");
+  }
+});
+
 module.exports = router;

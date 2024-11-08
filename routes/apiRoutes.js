@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Timetable = require("../models/Timetable");
 const Subject = require("../models/Subject");
+const Books = require("../models/Library");
 
 router.get("/api/userdata", (req, res) => {
   if (!req.session.user) {
@@ -42,6 +43,14 @@ router.get("/api/subject/:branch/:subject", async (req, res) => {
     });
     res.json(subjectData[subject]);
   } catch (err) {
-    res.send (err);
+    res.send(err);
   }
-})
+});
+router.get("/api/books", async (req, res) => {
+  try {
+    const bookData = await Books.find({});
+    res.json(bookData);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
