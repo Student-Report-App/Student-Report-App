@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
             try {
               const [index, subjectName] = subject.split(" ");
               subjectCells[index].textContent = subjectName;
-              fetch(`/api/subject/${branch}/${subjectName}`)
+              fetch(`/api/subject/${subjectName}`)
                 .then((response) => response.json())
                 .then((subjectDetails) => {
                   subjectData[subjectName] = subjectDetails;
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 try {
                   const [index, subjectName] = subject.split(" ");
                   subjectCells[index].textContent = subjectName;
-                  fetch(`/api/subject/${branch}/${subjectName}`)
+                  fetch(`/api/subject/${subjectName}`)
                     .then((response) => response.json())
                     .then((subjectDetails) => {
                       subjectData[subjectName] = subjectDetails;
@@ -71,7 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
         hoverBox.innerHTML = `
               <strong>${data.title}</strong> <br>
               Credits: <strong>${data.credit}</strong> <br>
-              ${data.lecturer} <br>
               Code: <strong>${data.code}</strong>
             `;
       } else {

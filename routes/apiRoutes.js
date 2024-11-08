@@ -45,13 +45,10 @@ router.get("/api/timetable/:branch/:day", async (req, res) => {
 });
 module.exports = router;
 
-router.get("/api/subject/:branch/:subject", async (req, res) => {
-  const branch = req.params.branch.toUpperCase();
+router.get("/api/subject/:subject", async (req, res) => {
   const subject = req.params.subject.toUpperCase();
   try {
-    const subjectData = await Subject.findOne({
-      Branch: branch,
-    });
+    const subjectData = await Subject.findOne({});
     res.json(subjectData[subject]);
   } catch (err) {
     res.send(err);
