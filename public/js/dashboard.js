@@ -7,7 +7,15 @@ const logoutBtn = document.getElementById("logout");
 const classes = Array.from(document.querySelectorAll(".class-item"));
 const hoverBox = document.getElementById("hover-box");
 
-const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 let subjectData = {};
 let currentBranch = "";
 
@@ -26,53 +34,63 @@ function fetchUserData() {
       firstName.textContent = data.name.split(" ")[0];
       branch.textContent = data.branch;
       currentBranch = data.branch;
+      currentDivision = data.division;
     });
 }
 
 function fetchTimetable() {
   const today = days[new Date().getDay()];
-  fetchUserData().then(() => fetch(`/api/timetable/${currentBranch}/${today}`))
-  .then((response) => response.json())
-  .then((data) => {
-    updateClassItems(data);
-    fetchSubjectDetails();
-  });
+  fetchUserData()
+    .then(() => fetch(`/api/timetable/branch/${currentBranch}/${today}`))
+    .then((response) => response.json())
+    .then((branchData) => {
+      updateClassItems(branchData);
+    })
+    .then(() => fetch(`/api/timetable/division/${currentDivision}/${today}`))
+    .then((response) => response.json())
+    .then((divisionData) => {
+      updateClassItems(divisionData);
+    })
+    .then(() => {
+      classes.forEach((cell) => {
+        if (cell.textContent === "") {
+          cell.textContent = "Free";
+          cell.style.backgroundColor = "#16E838";
+        }
+      });
+    })
+    .then(() => highlightCurrentClass());
 }
 
 function updateClassItems(data) {
-  classes.forEach((item, index) => {
-    const subject = data[index];
-    if (subject) {
-      item.textContent = subject;
-      subjectData[subject] = null;
-    } else {
-      item.textContent = "Free";
-      item.style.backgroundColor = "#16E838";
-    }
+  data.forEach((subject) => {
+    try {
+      const [index, subjectName] = subject.split(" ");
+      classes[index].textContent = subjectName;
+      fetch(`/api/subject/${subjectName}`)
+        .then((response) => response.json())
+        .then((subjectDetails) => {
+          subjectData[subjectName] = subjectDetails;
+        });
+    } catch (error) {}
   });
 }
 
-function fetchSubjectDetails() {
-  const subjectPromises = Object.keys(subjectData).map((subject) =>
-    fetch(`/api/subject/${currentBranch}/${subject}`)
-      .then((response) => response.json())
-      .then((data) => {
-        subjectData[subject] = data;
-      })
-  );
-
-  Promise.all(subjectPromises).then(() => {
-    classes.forEach((item) => {
-      item.addEventListener("mouseover", handleMouseOver);
-      item.addEventListener("mouseout", handleMouseOut);
-    });
-  });
-}
+classes.forEach((item) => {
+  item.addEventListener("mouseover", handleMouseOver);
+  item.addEventListener("mouseout", handleMouseOut);
+});
 
 function handleMouseOver(event) {
   hoverBox.style.display = "block";
-  hoverBox.style.top = `${event.target.offsetTop + event.target.offsetHeight + 20}px`;
-  hoverBox.style.left = `${event.target.offsetLeft + event.target.offsetWidth / 2 - hoverBox.offsetWidth / 2}px`;
+  hoverBox.style.top = `${
+    event.target.offsetTop + event.target.offsetHeight + 20
+  }px`;
+  hoverBox.style.left = `${
+    event.target.offsetLeft +
+    event.target.offsetWidth / 2 -
+    hoverBox.offsetWidth / 2
+  }px`;
 
   const subject = event.target.innerText;
   if (subject !== "Free" && subjectData[subject]) {
@@ -80,14 +98,17 @@ function handleMouseOver(event) {
     hoverBox.innerHTML = `
       <strong>${data.title}</strong> <br>
       Credits: <strong>${data.credit}</strong> <br>
-      ${data.lecturer} <br>
       Code: <strong>${data.code}</strong>
     `;
   } else {
     hoverBox.innerHTML = "This class is free. Enjoy!";
   }
 
-  hoverBox.style.left = `${event.target.offsetLeft + event.target.offsetWidth / 2 - hoverBox.offsetWidth / 2}px`;
+  hoverBox.style.left = `${
+    event.target.offsetLeft +
+    event.target.offsetWidth / 2 -
+    hoverBox.offsetWidth / 2
+  }px`;
 }
 
 function handleMouseOut() {
@@ -98,20 +119,23 @@ function handleMouseOut() {
 function highlightCurrentClass() {
   const hour = new Date().getHours();
   const timeSlots = [9, 10, 11, 12, 14, 15, 16, 17];
-  const timeSlot = timeSlots.findIndex(slot => hour >= slot && hour < slot + 1) + 1 || null;
+  const timeSlot =
+    timeSlots.findIndex((slot) => hour >= slot && hour < slot + 1) + 1 || null;
 
   const currentClass = document.getElementById(timeSlot);
   if (currentClass && currentClass.innerText !== "Free") {
     currentClass.style.color = "#fff";
     currentClass.style.backgroundColor = "#2c3e50";
   }
+
+  const nextClass = document.getElementById("next-class");
+  const nextClassName = document.getElementById(timeSlot + 1).textContent;
+  nextClass.textContent = nextClassName;
 }
 
 function init() {
   currentDate.textContent = new Date().toDateString();
-  fetchUserData();
   fetchTimetable();
-  highlightCurrentClass();
 }
 
 init();

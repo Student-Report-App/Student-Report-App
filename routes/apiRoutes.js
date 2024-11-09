@@ -33,7 +33,7 @@ router.get("/api/timetable/division/:division", async (req, res) => {
   }
 });
 
-router.get("/api/timetable/:branch/:day", async (req, res) => {
+router.get("/api/timetable/branch/:branch/:day", async (req, res) => {
   try {
     const timetable = await Timetable.findOne({
       Branch: req.params.branch.toUpperCase(),
@@ -43,7 +43,17 @@ router.get("/api/timetable/:branch/:day", async (req, res) => {
     res.send(err);
   }
 });
-module.exports = router;
+
+router.get("/api/timetable/division/:division/:day", async (req, res) => {
+  try {
+    const timetable = await Timetable.findOne({
+      Division: req.params.division.toUpperCase(),
+    });
+    res.json(timetable[req.params.day]);
+  } catch (err) {
+    res.send(err);
+  }
+});
 
 router.get("/api/subject/:subject", async (req, res) => {
   const subject = req.params.subject.toUpperCase();
@@ -62,3 +72,5 @@ router.get("/api/books", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+module.exports = router;

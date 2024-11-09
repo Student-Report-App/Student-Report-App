@@ -76,6 +76,7 @@ h1 {
   justify-content: flex-start;
   min-height: 300px;
   word-wrap: break-word; 
+  cursor: pointer;
 }
 
 .book-title {

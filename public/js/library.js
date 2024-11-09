@@ -13,7 +13,6 @@ function fetchBooks() {
 
 function displayBooks(books) {
   const libraryContainer = document.getElementById("card-container");
-  console.log(libraryContainer);
   books.forEach((book) => {
     const bookCard = createBookCard(book);
     libraryContainer.appendChild(bookCard);
