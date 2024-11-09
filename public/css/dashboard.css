@@ -167,13 +167,6 @@ header {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.todays-classes .class-item span {
-  display: block;
-  font-weight: bold;
-  text-transform: capitalize;
-  letter-spacing: 0.5px;
-}
-
 .hover-box {
   display: none;
   position: absolute;
@@ -202,4 +195,9 @@ header {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+#lunch-box {
+  background-color: #f39c12;
+  color: #fff
 }

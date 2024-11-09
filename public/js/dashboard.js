@@ -65,7 +65,8 @@ function fetchTimetable() {
 function updateClassItems(data) {
   data.forEach((subject) => {
     try {
-      const [index, subjectName] = subject.split(" ");
+      let [index, subjectName] = subject.split(" ");
+      index = index >= 4 ? (Number(index) + 1) : index;
       classes[index].textContent = subjectName;
       fetch(`/api/subject/${subjectName}`)
         .then((response) => response.json())
@@ -93,15 +94,17 @@ function handleMouseOver(event) {
   }px`;
 
   const subject = event.target.innerText;
-  if (subject !== "Free" && subjectData[subject]) {
+  if (subjectData[subject]) {
     const data = subjectData[subject];
     hoverBox.innerHTML = `
       <strong>${data.title}</strong> <br>
       Credits: <strong>${data.credit}</strong> <br>
       Code: <strong>${data.code}</strong>
     `;
+  } else if (subject === "Lunch") {
+    hoverBox.innerHTML = "<strong>Bon appetit!</strong>";
   } else {
-    hoverBox.innerHTML = "This class is free. Enjoy!";
+    hoverBox.innerHTML = "This class is free!<br><strong>Enjoy!</strong>";
   }
 
   hoverBox.style.left = `${
@@ -122,15 +125,27 @@ function highlightCurrentClass() {
   const timeSlot =
     timeSlots.findIndex((slot) => hour >= slot && hour < slot + 1) + 1 || null;
 
-  const currentClass = document.getElementById(timeSlot);
-  if (currentClass && currentClass.innerText !== "Free") {
+  const minutesLeft = 60 - new Date().getMinutes();
+  const nextClass = document.getElementById("next-class");
+
+  try {
+    const currentClass = document.getElementById(timeSlot);
     currentClass.style.color = "#fff";
     currentClass.style.backgroundColor = "#2c3e50";
-  }
 
-  const nextClass = document.getElementById("next-class");
-  const nextClassName = document.getElementById(timeSlot + 1).textContent;
-  nextClass.textContent = nextClassName;
+    let nextClassName = "";
+    if (timeSlot === 4) {
+      nextClassName = "Lunch";
+    } else if (timeSlot === 8) {
+      nextClassName = "End of the day";
+    } else {
+      nextClassName = document.getElementById(timeSlot + 1).textContent;
+    }
+    nextClass.innerHTML = `<strong>${nextClassName}</strong> in <strong>${minutesLeft} minutes</strong>`;
+  } catch (error) {
+    console.log(error);
+    nextClass.innerHTML = `Nothing Yet`;
+  }
 }
 
 function init() {
