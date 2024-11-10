@@ -18,6 +18,7 @@ const days = [
 ];
 let subjectData = {};
 let currentBranch = "";
+let currentDivision = "";
 
 logoutBtn.addEventListener("click", handleLogout);
 
@@ -43,14 +44,10 @@ function fetchTimetable() {
   fetchUserData()
     .then(() => fetch(`/api/timetable/branch/${currentBranch}/${today}`))
     .then((response) => response.json())
-    .then((branchData) => {
-      updateClassItems(branchData);
-    })
+    .then((branchData) => updateClassItems(branchData))
     .then(() => fetch(`/api/timetable/division/${currentDivision}/${today}`))
     .then((response) => response.json())
-    .then((divisionData) => {
-      updateClassItems(divisionData);
-    })
+    .then((divisionData) => updateClassItems(divisionData))
     .then(() => {
       classes.forEach((cell) => {
         if (cell.textContent === "") {
@@ -66,7 +63,7 @@ function updateClassItems(data) {
   data.forEach((subject) => {
     try {
       let [index, subjectName] = subject.split(" ");
-      index = index >= 4 ? (Number(index) + 1) : index;
+      index = index >= 4 ? Number(index) + 1 : index;
       classes[index].textContent = subjectName;
       fetch(`/api/subject/${subjectName}`)
         .then((response) => response.json())

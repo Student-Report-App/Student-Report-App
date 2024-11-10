@@ -22,9 +22,9 @@ const updateYearAndBranch = () => {
     [curYear - 3]: "4th",
   };
   const branchMap = {
-    0: "cse",
-    1: "ece",
-    2: "dsai",
+    0: "CSE",
+    1: "ECE",
+    2: "DSAI",
   };
 
   if (yearMap[year]) {
@@ -55,32 +55,36 @@ const checkExists = async (type, value) => {
   }
 };
 
-fullName.addEventListener("input", updateUsernameAndEmail);
-roll.addEventListener("input", () => {
-  updateYearAndBranch();
-  updateUsernameAndEmail();
-});
+const initializeEventListeners = () => {
+  fullName.addEventListener("input", updateUsernameAndEmail);
+  roll.addEventListener("input", () => {
+    updateYearAndBranch();
+    updateUsernameAndEmail();
+  });
 
-username.addEventListener("input", async () => {
-  await checkExists("Username", username.value);
-});
-email.addEventListener("input", async () => {
-  await checkExists("Email", email.value);
-});
+  username.addEventListener("input", async () => {
+    await checkExists("Username", username.value);
+  });
+  email.addEventListener("input", async () => {
+    await checkExists("Email", email.value);
+  });
 
-submitBtn.addEventListener("click", async (e) => {
-  e.preventDefault();
-  if (
-    fullName.value.trim() !== "" &&
-    roll.value.trim() !== "" &&
-    username.value.trim() !== "" &&
-    email.value.trim() !== ""
-  ) {
-    const isUsernameTaken = await checkExists("Username", username.value);
-    const isEmailTaken = await checkExists("Email", email.value);
-    if (!isUsernameTaken && !isEmailTaken)
-      document.getElementById("register-form").submit();
-  } else {
-    errorMessage.innerText = "Please fill in all fields.";
-  }
-});
+  submitBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    if (
+      fullName.value.trim() !== "" &&
+      roll.value.trim() !== "" &&
+      username.value.trim() !== "" &&
+      email.value.trim() !== ""
+    ) {
+      const isUsernameTaken = await checkExists("Username", username.value);
+      const isEmailTaken = await checkExists("Email", email.value);
+      if (!isUsernameTaken && !isEmailTaken)
+        document.getElementById("register-form").submit();
+    } else {
+      errorMessage.innerText = "Please fill in all fields.";
+    }
+  });
+};
+
+initializeEventListeners();

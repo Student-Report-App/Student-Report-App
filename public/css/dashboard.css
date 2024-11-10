@@ -181,9 +181,8 @@ header {
   text-align: center;
 }
 
-.class-item{
+.class-item {
   animation: fadeIn 0.5s ease-out;
-
 }
 
 @keyframes fadeIn {
@@ -199,5 +198,5 @@ header {
 
 #lunch-box {
   background-color: #f39c12;
-  color: #fff
+  color: #fff;
 }

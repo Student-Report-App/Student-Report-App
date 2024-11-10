@@ -10,7 +10,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "test", // Secret key for session encryption
+    secret: process.env.SESSION_SECRET || "test",
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -25,7 +25,6 @@ mongoose
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Could not connect to the database", err));
 
-// Import routes
 const getRoutes = require("./routes/getRoutes");
 const postRoutes = require("./routes/postRoutes");
 const apiRoutes = require("./routes/apiRoutes");

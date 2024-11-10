@@ -2,6 +2,14 @@ const express = require("express");
 const router = express.Router();
 const path = require("path");
 
+const sendFileIfAuthenticated = (req, res, filePath) => {
+  if (req.session.user) {
+    res.sendFile(path.join(__dirname, filePath));
+  } else {
+    res.redirect("/404");
+  }
+};
+
 router.get("/", (req, res) => {
   if (req.session.user) {
     res.redirect("/dashboard");
@@ -11,11 +19,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/dashboard", (req, res) => {
-  if (req.session.user) {
-    res.sendFile(path.join(__dirname, "/../views/dashboard.html"));
-  } else {
-    res.redirect("/404");
-  }
+  sendFileIfAuthenticated(req, res, "/../views/dashboard.html");
 });
 
 router.get("/register", (req, res) => {
@@ -27,27 +31,15 @@ router.get("/404", (req, res) => {
 });
 
 router.get("/timetable", (req, res) => {
-  if (req.session.user) {
-    res.sendFile(path.join(__dirname, "/../views/timetable.html"));
-  } else {
-    res.redirect("/404");
-  }
+  sendFileIfAuthenticated(req, res, "/../views/timetable.html");
 });
 
 router.get("/library", (req, res) => {
-  if (req.session.user) {
-    res.sendFile(path.join(__dirname, "/../views/library.html"));
-  } else {
-    res.redirect("/404");
-  }
+  sendFileIfAuthenticated(req, res, "/../views/library.html");
 });
 
 router.get("/profile", (req, res) => {
-  if (req.session.user) {
-    res.sendFile(path.join(__dirname, "/../views/profile.html"));
-  } else {
-    res.redirect("/404");
-  }
+  sendFileIfAuthenticated(req, res, "/../views/profile.html");
 });
 
 module.exports = router;

@@ -38,7 +38,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  form.addEventListener("submit", (e) => {
+  async function checkAvailability(endpoint, value) {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(value),
+    });
+    const data = await response.json();
+    return data.exists;
+  }
+
+  async function handleFormSubmit(e) {
     e.preventDefault();
     const name = document.getElementById("name").value;
     const username = document.getElementById("username").value;
@@ -50,59 +62,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const branch = document.querySelector(`input[name="branch"]:checked`).value;
     const year = document.querySelector(`input[name="year"]:checked`).value;
 
-    if (
-      !name ||
-      !username ||
-      !email ||
-      !roll ||
-      !division ||
-      !branch ||
-      !year
-    ) {
-      messageDiv.textContent = "All fields are required";
-      return;
-    }
+    let usernameExists = false;
+    let emailExists = false;
 
     if (username !== originalUsername) {
-      fetch("/auth/checkUsername", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.exists) {
-            messageDiv.textContent = "Username already exists";
-            messageDiv.style.color = "red";
-          } else {
-            messageDiv.textContent = "";
-          }
-        });
+      usernameExists = await checkAvailability("/auth/checkUsername", {
+        username,
+      });
+      if (usernameExists) {
+        messageDiv.textContent = "Username already exists";
+        messageDiv.style.color = "red";
+        return;
+      }
     }
 
     if (email !== originalEmail) {
-      fetch("/auth/checkEmail", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.exists) {
-            messageDiv.textContent = "Email already exists";
-            messageDiv.style.color = "red";
-          } else {
-            messageDiv.textContent = "";
-          }
-        });
+      emailExists = await checkAvailability("/auth/checkEmail", { email });
+      if (emailExists) {
+        messageDiv.textContent = "Email already exists";
+        messageDiv.style.color = "red";
+        return;
+      }
     }
 
-    if (messageDiv.textContent === "") {
-      fetch("/auth/updateData", {
+    if (!usernameExists && !emailExists) {
+      const response = await fetch("/auth/updateData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -116,17 +100,17 @@ document.addEventListener("DOMContentLoaded", () => {
           branch,
           year,
         }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.success) {
-            messageDiv.textContent = "Profile updated successfully";
-            messageDiv.style.color = "green";
-          } else {
-            messageDiv.textContent = "Error updating profile";
-            messageDiv.style.color = "red";
-          }
-        });
+      });
+      const data = await response.json();
+      if (data.success) {
+        messageDiv.textContent = "Profile updated successfully";
+        messageDiv.style.color = "green";
+      } else {
+        messageDiv.textContent = "Error updating profile";
+        messageDiv.style.color = "red";
+      }
     }
-  });
+  }
+
+  form.addEventListener("submit", handleFormSubmit);
 });

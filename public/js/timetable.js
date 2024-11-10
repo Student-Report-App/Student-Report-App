@@ -1,7 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
   const subjectData = {};
-  let branch;
+  let branch, division;
+
+  const fetchSubjectDetails = (subjectName) => {
+    return fetch(`/api/subject/${subjectName}`)
+      .then((response) => response.json())
+      .then((subjectDetails) => {
+        subjectData[subjectName] = subjectDetails;
+      });
+  };
+
+  const updateSubjectCells = (subjects, subjectCells) => {
+    subjects.forEach((subject) => {
+      try {
+        const [index, subjectName] = subject.split(" ");
+        subjectCells[index].textContent = subjectName;
+        fetchSubjectDetails(subjectName);
+      } catch (error) {}
+    });
+  };
+
   fetch("/api/userdata")
     .then((response) => response.json())
     .then((data) => {
@@ -13,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((data) => {
       days.forEach((day) => {
         const branchSubjects = data[day];
-        dayRow = document.getElementById(`${day}-row`);
+        const dayRow = document.getElementById(`${day}-row`);
 
         if (dayRow) {
           const subjectCells = dayRow.querySelectorAll(".subject");
@@ -23,32 +42,13 @@ document.addEventListener("DOMContentLoaded", () => {
             lunchCell.textContent = "Lunch";
           }
 
-          branchSubjects.forEach((subject) => {
-            try {
-              const [index, subjectName] = subject.split(" ");
-              subjectCells[index].textContent = subjectName;
-              fetch(`/api/subject/${subjectName}`)
-                .then((response) => response.json())
-                .then((subjectDetails) => {
-                  subjectData[subjectName] = subjectDetails;
-                });
-            } catch (error) {}
-          });
+          updateSubjectCells(branchSubjects, subjectCells);
+
           fetch(`/api/timetable/division/${division}`)
             .then((response) => response.json())
             .then((data) => {
               const divSubjects = data[day];
-              divSubjects.forEach((subject) => {
-                try {
-                  const [index, subjectName] = subject.split(" ");
-                  subjectCells[index].textContent = subjectName;
-                  fetch(`/api/subject/${subjectName}`)
-                    .then((response) => response.json())
-                    .then((subjectDetails) => {
-                      subjectData[subjectName] = subjectDetails;
-                    });
-                } catch (error) {}
-              });
+              updateSubjectCells(divSubjects, subjectCells);
             })
             .then(() => {
               subjectCells.forEach((cell) => {
@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     })
     .catch((error) => {});
+
   const hoverBox = document.getElementById("hover-box");
   document.querySelectorAll(".subject").forEach((cell) => {
     cell.addEventListener("mouseover", (event) => {
@@ -69,10 +70,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (subject !== "Free") {
         const data = subjectData[subject];
         hoverBox.innerHTML = `
-              <strong>${data.title}</strong> <br>
-              Credits: <strong>${data.credit}</strong> <br>
-              Code: <strong>${data.code}</strong>
-            `;
+          <strong>${data.title}</strong> <br>
+          Credits: <strong>${data.credit}</strong> <br>
+          Code: <strong>${data.code}</strong>
+        `;
       } else {
         hoverBox.innerHTML = "This class is free. Enjoy!";
       }

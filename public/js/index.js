@@ -13,10 +13,7 @@ const checkExists = async (type, value) => {
     });
 
     const data = await response.json();
-    if (data.exists) {
-      return true;
-    }
-    return false;
+    return data.exists;
   } catch (error) {
     errorMessage.innerText = "An error occurred while checking the database";
     return false;
@@ -34,10 +31,7 @@ const passwordMatch = async (login, password, loginType, checked) => {
     });
 
     const data = await response.json();
-    if (data.match) {
-      return true;
-    }
-    return false;
+    return data.match;
   } catch (error) {
     errorMessage.innerText = "An error occurred while checking the password";
     return false;
@@ -54,7 +48,12 @@ const handleLogin = async (e) => {
 
   if (exists) {
     const password = document.getElementById("password").value;
-    const passwordMatched = await passwordMatch(login, password, loginType, remember.checked);
+    const passwordMatched = await passwordMatch(
+      login,
+      password,
+      loginType,
+      remember.checked
+    );
     if (passwordMatched) {
       document.getElementById("login-form").submit();
     } else {
@@ -67,16 +66,18 @@ const handleLogin = async (e) => {
 
 loginBtn.addEventListener("click", handleLogin);
 
-document.getElementById('toggle-password').addEventListener('click', function() {
-  const passwordInput = document.getElementById('password');
-  const icon = this.querySelector('i');
-  if (passwordInput.type === 'password') {
-    passwordInput.type = 'text';
-    icon.classList.remove('fa-eye');
-    icon.classList.add('fa-eye-slash');
-  } else {
-    passwordInput.type = 'password';
-    icon.classList.remove('fa-eye-slash');
-    icon.classList.add('fa-eye');
-  }
-});
+document
+  .getElementById("toggle-password")
+  .addEventListener("click", function () {
+    const passwordInput = document.getElementById("password");
+    const icon = this.querySelector("i");
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+      icon.classList.remove("fa-eye");
+      icon.classList.add("fa-eye-slash");
+    } else {
+      passwordInput.type = "password";
+      icon.classList.remove("fa-eye-slash");
+      icon.classList.add("fa-eye");
+    }
+  });

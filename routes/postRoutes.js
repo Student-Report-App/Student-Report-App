@@ -22,31 +22,25 @@ router.post("/auth/logout", (req, res) => {
 
 router.post("/auth/checkUsername", async (req, res) => {
   const { username } = req.body;
-  const exists = await User.findOne({ username: username });
+  const exists = await User.findOne({ username });
   res.json({ exists: exists !== null });
 });
 
 router.post("/auth/checkEmail", async (req, res) => {
   const { email } = req.body;
-  const exists = await User.findOne({ email: email });
+  const exists = await User.findOne({ email });
   res.json({ exists: exists !== null });
 });
 
 router.post("/auth/checkPassword", async (req, res) => {
   const { login, password, loginType, checked } = req.body;
-  let record;
-  if (loginType === "email") {
-    record = await User.findOne({ email: login });
-  } else {
-    record = await User.findOne({ username: login });
-  }
-  if (record.password === password) {
+  const query = loginType === "email" ? { email: login } : { username: login };
+  const record = await User.findOne(query);
+  if (record && record.password === password) {
     req.session.user = record;
-    if (checked) {
-      req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 30; // 1 month
-    } else {
-      req.session.cookie.maxAge = 1000 * 60 * 60 * 24; // 24 hours
-    }
+    req.session.cookie.maxAge = checked
+      ? 1000 * 60 * 60 * 24 * 30
+      : 1000 * 60 * 60 * 24;
     res.json({ match: true });
   } else {
     res.json({ match: false });
@@ -66,9 +60,8 @@ router.post("/auth/register", async (req, res) => {
     roll,
     division,
   });
-
   try {
-    const data = await newUser.save();
+    await newUser.save();
     res.redirect("/");
   } catch (error) {
     console.log(error);
