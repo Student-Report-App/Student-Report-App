@@ -37,8 +37,7 @@ h1 {
 }
 
 label {
-    display: block;
-    font-weight: bold;
+    display: flex;
     margin-bottom: 5px;
 }
 
@@ -67,23 +66,25 @@ input[type="number"] {
 
 /* Styling for the save button */
 button[type="submit"] {
-    background-color: #4CAF50;
+    background-color: #25883c;
     color: white;
     border: none;
     padding: 10px 15px;
     border-radius: 4px;
     cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s;
     width: 100%;
     font-size: 16px;
 }
 
 button[type="submit"]:hover {
-    background-color: #45a049;
+    background-color: #15982f;
+    transform: scale(1.05);
 }
 
 /* Styling for the Go Back button */
 .go-back-btn {
-    background-color: #007BFF; /* Blue color */
+    background-color: #2c3e50; /* Blue color */
     color: white;
     border: none;
     padding: 8px 20px; /* Smaller padding */
@@ -94,10 +95,12 @@ button[type="submit"]:hover {
     margin-top: 20px; /* Adds more space between the form and the button */
     display: block; /* Ensure it's a block-level element, placed below the form */
     width: 100%; /* Make the button full-width for consistency */
+    transition: background 0.3s ease, transform 0.3s;
 }
 
 .go-back-btn:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #354b60; /* Darker blue on hover */
+    transform: scale(1.05);
 }
 
 /* Message container */
@@ -111,5 +114,10 @@ button[type="submit"]:hover {
 .radio-group {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: left;
+}
+.radio-group label{
+    display: inline-flex;
+    align-items: start;
+    margin: -5;
 }

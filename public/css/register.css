@@ -16,7 +16,7 @@ body {
   text-align: center;
 }
 h2 {
-  color: #333;
+  color: #34495e;
   margin-bottom: 20px;
   font-size: 24px;
 }
@@ -58,7 +58,7 @@ input[type="password"]:focus {
   margin-right: 5px;
 }
 .btn {
-  background-color: #007bff;
+  background-color:#34495e;
   color: white;
   padding: 12px 20px;
   border: none;
