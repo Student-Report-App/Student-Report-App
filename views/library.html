@@ -1,23 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Library</title>
-    <link rel="stylesheet" href="css/library.css" />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <div class="container" id="library-container">
-      <h1 id="library"><i class="fa-solid fa-book-open-reader"></i> Library</h1>
-      <div class="card-container" id="card-container"></div>
-    </div>
-    <button class="go-back-btn" onclick="window.location.href='/dashboard'">
-      Go Back
-    </button>
-    <script src="js/library.js"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Page</title>
+    <link rel="stylesheet" href="css/library.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Welcome to the Thinkspan Library</h1>
+            <nav>
+                <ul>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section id="search">
+            <h2>Search Our Catalog</h2>
+            <input type="text" placeholder="Search the catalog...">
+            <button>Search</button>
+        </section>
+
+        <section id="resources">
+            <h2>Digital Resources</h2>
+            <p>Access a variety of digital resources including eBooks, journals, and databases.</p>
+            <div class="card-container">
+                <div class="card">
+                    <h3>eBooks Collection</h3>
+                    <p>Browse our extensive collection of eBooks available for download.</p>
+                    <a href="#">Explore eBooks</a>
+                </div>
+                <div class="card">
+                    <h3>Research Databases</h3>
+                    <p>Access databases for academic research and scholarly articles.</p>
+                    <a href="#">View Databases</a>
+                </div>
+                <div class="card">
+                    <h3>Online Journals</h3>
+                    <p>Read the latest articles from various academic journals.</p>
+                    <a href="#">Access Journals</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Thinkspan. All rights reserved.</p>
+    </footer>
+</body>
 </html>
