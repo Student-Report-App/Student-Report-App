@@ -54,7 +54,8 @@ router.post("/auth/checkPassword", async (req, res) => {
 });
 
 router.post("/auth/register", async (req, res) => {
-  const { name, username, email, password, year, branch, roll, division } = req.body;
+  const { name, username, email, password, year, branch, roll, division } =
+    req.body;
   const newUser = new User({
     name,
     username,
@@ -63,7 +64,7 @@ router.post("/auth/register", async (req, res) => {
     year,
     branch,
     roll,
-    division
+    division,
   });
 
   try {
@@ -74,32 +75,20 @@ router.post("/auth/register", async (req, res) => {
   }
 });
 
-//may be buggy not tested yet properly
-//@fronted pls make changes to the edit profile form
-
-router.post("/auth/updatedata", async (req, res) => {
-  const { name, username, email, year, branch, rollno} = req.body;
-  const user = await User.findOne({ username: req.session.user.username });
-  console.log(user);
-  yearNum = parseInt(year, 10);
-  user.name = name;
-  user.username = username;
-  user.email = email;
-  user.year = year;
-  user.roll = rollno;
-  user.branch = branch;
-  user.year = year+((year==1?"st":(year==2?"nd":(year==3?"rd":"th"))));
-  console.log(user);
-
+router.post("/auth/updateData", async (req, res) => {
+  const { name, username, email, roll, division, branch, year } = req.body;
   try {
-    const data = await user.save();
+    const user = await User.findOneAndUpdate(
+      { username: req.session.user.username },
+      { name, username, email, roll, division, branch, year },
+      { new: true }
+    );
     req.session.user = user;
-    res.redirect("/");
+    res.json({ success: true });
   } catch (error) {
     console.log(error);
+    res.json({ success: false });
   }
 });
-
-
 
 module.exports = router;

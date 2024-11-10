@@ -1,49 +1,132 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("profile-form");
+  const messageDiv = document.getElementById("message");
 
-    const form = document.getElementById('profile-form');
-    const messageDiv = document.getElementById('message');
-    
-    function fetchUserData() {
-        return fetch("/api/userdata")
-          .then((response) => response.json())
-          .then((data) => {
-            username = data.username;
-            roll = data.roll;
-            email = data.email
-            Name = data.name;
-            year = data.year.slice(0,1);
-            branch = data.branch;
-          });
-      }
+  async function fetchUserData() {
+    try {
+      const response = await fetch("/api/userdata");
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  }
 
+  let originalUsername = "";
+  let originalEmail = "";
+  function populateForm(data) {
+    document.getElementById("username").value = data.username;
+    document.getElementById("name").value = data.name;
+    document.getElementById("email").value = data.email;
+    document.getElementById("roll").value = data.roll;
+    document.querySelector(
+      `input[name="branch"][value="${data.branch}"]`
+    ).checked = true;
+    document.querySelector(
+      `input[name="year"][value="${data.year}"]`
+    ).checked = true;
+    document.querySelector(
+      `input[name="division"][value="${data.division}"]`
+    ).checked = true;
+    originalUsername = data.username;
+    originalEmail = data.email;
+  }
 
-    fetchUserData().then(() => {    
-        document.getElementById('username').value = username;
-        document.getElementById('name').value = Name;
-        document.getElementById('email').value = email;
-        document.getElementById('rollno').value = roll;
-        document.getElementById('branch').value = branch;
-        document.getElementById('year').value =  year;})
+  fetchUserData().then((data) => {
+    if (data) {
+      populateForm(data);
+    }
+  });
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = document.getElementById('name').value;
-        const username = document.getElementById('username').value;
-        const email = document.getElementById('email').value;
-        const rollno = document.getElementById('rollno').value;
-        const branch = document.getElementById('branch').value;
-        const year = document.getElementById('year').value;
-        
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = document.getElementById("name").value;
+    const username = document.getElementById("username").value;
+    const email = document.getElementById("email").value;
+    const roll = document.getElementById("roll").value;
+    const division = document.querySelector(
+      `input[name="division"]:checked`
+    ).value;
+    const branch = document.querySelector(`input[name="branch"]:checked`).value;
+    const year = document.querySelector(`input[name="year"]:checked`).value;
 
-        if (!['ECE','CSE','DSAI'].includes(branch)) {
-            messageDiv.innerHTML = "<p style='color: red;'>Please fill in all fields correctly.</p>";
-            return;
-        }
-        else{
-            messageDiv.innerHTML = `<p style='color: green;'>Profile updated successfully!</p>`;
-        }
+    if (
+      !name ||
+      !username ||
+      !email ||
+      !roll ||
+      !division ||
+      !branch ||
+      !year
+    ) {
+      messageDiv.textContent = "All fields are required";
+      return;
+    }
 
-        form.submit();
+    if (username !== originalUsername) {
+      fetch("/auth/checkUsername", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.exists) {
+            messageDiv.textContent = "Username already exists";
+            messageDiv.style.color = "red";
+          } else {
+            messageDiv.textContent = "";
+          }
+        });
+    }
 
-    });
+    if (email !== originalEmail) {
+      fetch("/auth/checkEmail", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.exists) {
+            messageDiv.textContent = "Email already exists";
+            messageDiv.style.color = "red";
+          } else {
+            messageDiv.textContent = "";
+          }
+        });
+    }
+
+    if (messageDiv.textContent === "") {
+      fetch("/auth/updateData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          username,
+          email,
+          roll,
+          division,
+          branch,
+          year,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            messageDiv.textContent = "Profile updated successfully";
+            messageDiv.style.color = "green";
+          } else {
+            messageDiv.textContent = "Error updating profile";
+            messageDiv.style.color = "red";
+          }
+        });
+    }
+  });
 });

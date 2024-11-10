@@ -1,47 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Edit Profile</title>
-    <link rel="stylesheet" href="css/profile.css">
-</head>
-<body>
+    <link rel="stylesheet" href="css/profile.css" />
+  </head>
+  <body>
     <div class="profile-container">
-        <h1>Edit Your Profile</h1>
-        <form id="profile-form" action="/auth/updatedata" method="post">
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name">
+      <h1>Edit Your Profile</h1>
+      <form id="profile-form">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required/>
+        </div>
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="roll">Roll Number:</label>
+          <input type="number" id="roll" name="roll" required />
+        </div>
+        <div class="form-group">
+          <label for="division">Division:</label>
+          <div class="radio-group">
+            <input type="radio" id="basic" name="division" value="B" required />
+            <label for="basic">Basic</label>
+            <input type="radio" id="advance 1" name="division" value="A1" required />
+            <label for="advance 1">Advance 1</label>
+            <input type="radio" id="advance 2" name="division" value="A2" required />
+            <label for="advance 2">Advance 2</label>
+          </div>
+        </div>
+        <div class="form-group">
+            <label for="branch">Branch:</label>
+            <div class="radio-group">
+            <input type="radio" id="CSE" name="branch" value="CSE" required />
+            <label for="CSE">CSE</label>
+            <input type="radio" id="ECE" name="branch" value="ECE" required />
+            <label for="ECE">ECE</label>
+            <input type="radio" id="DSAI" name="branch" value="DSAI" required />
+            <label for="DSAI">DSAI</label>
             </div>
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="rollno">Roll Number:</label>
-                <input type="number" id="rollno" name="rollno" required>
-            </div>
-            <div class="form-group">
-                <label for="branch">Branch (CSE/DSAI/ECE):</label>
-                <input type="text" id="branch" name="branch" required>
-            </div>
-            <div class="form-group">
-                <label for="year">Year:</label>
-                <input type="number" id="year" name="year" required>
-            </div>
-            
-            <div id="message"></div>
-            <button type="submit">Save Changes</button>
-        </form>
-        <button class="go-back-btn" onclick="window.history.back()">
-            Go Back
-        </button>
+        </div>
+        
+        <div class="form-group">
+          <label for="year">Year:</label>
+          <div class="radio-group">
+            <input type="radio" id="1st" name="year" value="1st" />
+            <label for="1st">1st</label>
+            <input type="radio" id="2nd" name="year" value="2nd" />
+            <label for="2nd">2nd</label>
+            <input type="radio" id="3rd" name="year" value="3rd" />
+            <label for="3rd">3rd</label>
+            <input type="radio" id="4th" name="year" value="4th" />
+            <label for="4th">4th</label>
+          </div>
+        </div>
+        <div id="message"></div>
+        <button type="submit">Save Changes</button>
+      </form>
+      <button class="go-back-btn" onclick="window.location.href='/'">
+        Go Back
+      </button>
     </div>
     <script src="js/profile.js"></script>
-</body>
+  </body>
 </html>
