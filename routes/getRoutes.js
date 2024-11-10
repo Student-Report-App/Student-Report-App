@@ -42,4 +42,12 @@ router.get("/library", (req, res) => {
   }
 });
 
+router.get("/profile", (req, res) => {
+  if (req.session.user) {
+    res.sendFile(path.join(__dirname, "/../views/profile.html"));
+  } else {
+    res.redirect("/404");
+  }
+});
+
 module.exports = router;

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="css/profile.css">
+</head>
+<body>
+    <div class="profile-container">
+        <h1>Edit Your Profile</h1>
+        <form id="profile-form" action="/auth/updatedata" method="post">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name">
+            </div>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="rollno">Roll Number:</label>
+                <input type="number" id="rollno" name="rollno" required>
+            </div>
+            <div class="form-group">
+                <label for="branch">Branch (CSE/DSAI/ECE):</label>
+                <input type="text" id="branch" name="branch" required>
+            </div>
+            <div class="form-group">
+                <label for="year">Year:</label>
+                <input type="number" id="year" name="year" required>
+            </div>
+            
+            <div id="message"></div>
+            <button type="submit">Save Changes</button>
+        </form>
+        <button class="go-back-btn" onclick="window.history.back()">
+            Go Back
+        </button>
+    </div>
+    <script src="js/profile.js"></script>
+</body>
+</html>
