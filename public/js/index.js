@@ -9,7 +9,7 @@ const checkExists = async (type, value) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ [type.toLowerCase()]: value }),
+      body: JSON.stringify({ [type.toLowerCase()]: value.trim() }),
     });
 
     const data = await response.json();
@@ -27,7 +27,12 @@ const passwordMatch = async (login, password, loginType, checked) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ login, password, loginType, checked }),
+      body: JSON.stringify({
+        login: login.trim(),
+        password: password.trim(),
+        loginType,
+        checked,
+      }),
     });
 
     const data = await response.json();
@@ -40,14 +45,14 @@ const passwordMatch = async (login, password, loginType, checked) => {
 
 const handleLogin = async (e) => {
   e.preventDefault();
-  const login = document.getElementById("login").value;
+  const login = document.getElementById("login").value.trim();
 
   const emailRegex = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
   const loginType = login.match(emailRegex) ? "Email" : "Username";
   const exists = await checkExists(loginType, login);
 
   if (exists) {
-    const password = document.getElementById("password").value;
+    const password = document.getElementById("password").value.trim();
     const passwordMatched = await passwordMatch(
       login,
       password,

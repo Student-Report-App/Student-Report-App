@@ -9,7 +9,8 @@ const curYear = Number(String(new Date().getFullYear()).slice(2));
 
 const updateUsernameAndEmail = () => {
   username.value =
-    fullName.value.split(" ")[0].toLowerCase() + roll.value.slice(0, 5);
+    fullName.value.trim().split(" ")[0].toLowerCase() +
+    roll.value.trim().slice(0, 5);
   email.value = username.value + "@iiitnr.edu.in";
 };
 
@@ -42,7 +43,7 @@ const checkExists = async (type, value) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ [type.toLowerCase()]: value }),
+    body: JSON.stringify({ [type.toLowerCase()]: value.trim() }),
   });
 
   const data = await response.json();
@@ -77,8 +78,11 @@ const initializeEventListeners = () => {
       username.value.trim() !== "" &&
       email.value.trim() !== ""
     ) {
-      const isUsernameTaken = await checkExists("Username", username.value);
-      const isEmailTaken = await checkExists("Email", email.value);
+      const isUsernameTaken = await checkExists(
+        "Username",
+        username.value.trim()
+      );
+      const isEmailTaken = await checkExists("Email", email.value.trim());
       if (!isUsernameTaken && !isEmailTaken)
         document.getElementById("register-form").submit();
     } else {

@@ -220,7 +220,7 @@ header {
   width: 100%;
   border-collapse: collapse;
   height: 85%;
-  table-layout: fixed; 
+  table-layout: fixed;
 }
 
 #calendar th,
@@ -228,7 +228,7 @@ header {
   padding: 10px;
   text-align: center;
   border: 1px solid #ddd;
-  width: 14.28%; 
+  width: 14.28%;
 }
 
 #calendar .highlight {
