@@ -109,3 +109,25 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
+
+.go-back-btn {
+    display: block;
+    margin: 30px auto 0;
+    padding: 12px 24px;
+    font-size: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    background: #007BFF;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .go-back-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background: #34495e;
+  }
+  

@@ -220,6 +220,7 @@ header {
   width: 100%;
   border-collapse: collapse;
   height: 85%;
+  table-layout: fixed; 
 }
 
 #calendar th,
@@ -227,6 +228,7 @@ header {
   padding: 10px;
   text-align: center;
   border: 1px solid #ddd;
+  width: 14.28%; 
 }
 
 #calendar .highlight {
@@ -239,4 +241,14 @@ header {
   background-color: #2c3e50;
   color: #fff;
   font-weight: bold;
+}
+
+#calendar .highlight:hover {
+  background-color: #4c6279;
+  transition: all 0.3s;
+}
+
+#calendar td:hover {
+  background-color: #9f9e9e;
+  transition: background-color 0.5s ease;
 }
