@@ -55,6 +55,15 @@ router.get("/api/timetable/division/:division/:day", async (req, res) => {
   }
 });
 
+router.get("/api/subjects", async (req, res) => {
+  try {
+    const subjects = await Subject.find({});
+    res.json(subjects);
+  } catch (err) {
+    res.send(err);
+  }
+});
+
 router.get("/api/subject/:subject", async (req, res) => {
   const subject = req.params.subject.toUpperCase();
   try {

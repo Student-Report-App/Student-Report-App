@@ -252,3 +252,12 @@ header {
   background-color: #9f9e9e;
   transition: background-color 0.5s ease;
 }
+
+.courses {
+  overflow-y: auto;
+  max-height: 350px;
+}
+
+h4 {
+  color: #2c3e50;
+}

@@ -6,6 +6,12 @@ const subjectDetailsSchema = new mongoose.Schema(
     title: String,
     lecturer: String,
     code: String,
+    CSE: String,
+    ECE: String,
+    DSAI: String,
+    A1: String,
+    A2: String,
+    B: String,
   },
   { _id: false }
 );

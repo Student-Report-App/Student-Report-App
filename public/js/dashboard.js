@@ -1,11 +1,12 @@
 const nameElement = document.getElementById("name");
 const roll = document.getElementById("roll");
 const firstName = document.getElementById("first-name");
-const branch = document.getElementById("branch");
+const branchElement = document.getElementById("branch");
 const currentDate = document.getElementById("current-date");
 const logoutBtn = document.getElementById("logout");
 const classes = Array.from(document.querySelectorAll(".class-item"));
 const hoverBox = document.getElementById("hover-box");
+const courseList = document.getElementById("course-list");
 
 const days = [
   "Sunday",
@@ -17,8 +18,8 @@ const days = [
   "Saturday",
 ];
 let subjectData = {};
-let currentBranch = "";
-let currentDivision = "";
+let branch = "";
+let division = "";
 
 logoutBtn.addEventListener("click", handleLogout);
 
@@ -33,19 +34,19 @@ function fetchUserData() {
       nameElement.textContent = data.name;
       roll.textContent = data.roll;
       firstName.textContent = data.name.split(" ")[0];
-      branch.textContent = data.branch;
-      currentBranch = data.branch;
-      currentDivision = data.division;
+      branchElement.textContent = data.branch;
+      branch = data.branch;
+      division = data.division;
     });
 }
 
 function fetchTimetable() {
   const today = days[new Date().getDay()];
   fetchUserData()
-    .then(() => fetch(`/api/timetable/branch/${currentBranch}/${today}`))
+    .then(() => fetch(`/api/timetable/branch/${branch}/${today}`))
     .then((response) => response.json())
     .then((branchData) => updateClassItems(branchData))
-    .then(() => fetch(`/api/timetable/division/${currentDivision}/${today}`))
+    .then(() => fetch(`/api/timetable/division/${division}/${today}`))
     .then((response) => response.json())
     .then((divisionData) => updateClassItems(divisionData))
     .then(() => {
@@ -96,6 +97,7 @@ function handleMouseOver(event) {
     hoverBox.innerHTML = `
       <strong>${data.title}</strong> <br>
       Credits: <strong>${data.credit}</strong> <br>
+      Lecturer: <strong>${data[branch] || data[division]}</strong> <br>
       Code: <strong>${data.code}</strong>
     `;
   } else if (subject === "Lunch") {
@@ -148,7 +150,6 @@ function highlightCurrentClass() {
 
     nextClass.innerHTML = `<strong>${nextClassName}</strong> in <strong>${minutesLeft} minutes</strong>`;
   } catch (error) {
-    console.log(error);
     nextClass.innerHTML = `Nothing Yet`;
   }
 }
@@ -187,10 +188,33 @@ function generateCalendar() {
   calendarElement.innerHTML = calendarHTML;
 }
 
+function fillCoursesList() {
+  fetch("/api/subjects")
+    .then((response) => response.json())
+    .then((data) => {
+      for (const [key, value] of Object.entries(data[0])) {
+        if (!value.title) continue;
+        const subjectTitleAndCode = document.createElement("h4");
+        subjectTitleAndCode.textContent = `${value.title} (${value.code})`;
+        courseList.appendChild(subjectTitleAndCode);
+
+        const subjectCredit = document.createElement("p");
+        subjectCredit.textContent = `Credits: ${value.credit}`;
+        courseList.appendChild(subjectCredit);
+
+        const subjectLecturer = document.createElement("p");
+        subjectLecturer.textContent = `Lecturer: ${
+          value[branch] || value[division]
+        }`;
+        courseList.appendChild(subjectLecturer);
+      }
+    });
+}
 function init() {
   currentDate.textContent = new Date().toDateString();
   fetchTimetable();
   generateCalendar();
+  fillCoursesList();
 }
 
 init();

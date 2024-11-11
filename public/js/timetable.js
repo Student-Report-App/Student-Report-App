@@ -72,10 +72,11 @@ document.addEventListener("DOMContentLoaded", () => {
         hoverBox.innerHTML = `
           <strong>${data.title}</strong> <br>
           Credits: <strong>${data.credit}</strong> <br>
+          Lecturer: <strong>${data[branch] || data[division]}</strong> <br>
           Code: <strong>${data.code}</strong>
         `;
       } else {
-        hoverBox.innerHTML = "This class is free. Enjoy!";
+        hoverBox.innerHTML = "This class is free!<br><strong>Enjoy!</strong>";
       }
       hoverBox.style.display = "block";
       hoverBox.style.left = `${
