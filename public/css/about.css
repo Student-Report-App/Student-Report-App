@@ -94,3 +94,18 @@ p {
 .contact-info a:hover {
   text-decoration: underline;
 }
+
+.go-back-btn {
+  display: block;
+  margin: 30px auto 0;
+  padding: 12px 24px;
+  font-size: 1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: white;
+  background: #2c3e50;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
