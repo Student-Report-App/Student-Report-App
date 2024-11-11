@@ -184,6 +184,14 @@ header {
 .class-item {
   animation: fadeIn 0.5s ease-out;
 }
+.sidebar nav ul li a:hover {
+  background: #34495e; 
+  padding-left: 30px; 
+}
+
+.sidebar nav ul li a.about {
+  font-weight: bold; 
+}
 
 @keyframes fadeIn {
   from {
