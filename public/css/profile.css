@@ -78,7 +78,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #15982f;
+    background-color: #1cc93f;
     transform: scale(1.05);
 }
 
