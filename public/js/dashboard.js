@@ -126,27 +126,71 @@ function highlightCurrentClass() {
   const nextClass = document.getElementById("next-class");
 
   try {
-    const currentClass = document.getElementById(timeSlot);
+    let currentClass;
+    if (hour === 13) {
+      currentClass = document.getElementById("lunch-box");
+    } else {
+      currentClass = document.getElementById(timeSlot);
+    }
     currentClass.style.color = "#fff";
     currentClass.style.backgroundColor = "#2c3e50";
 
     let nextClassName = "";
-    if (timeSlot === 4) {
+    if (hour === 13) {
+      nextClassName = document.getElementById(5).textContent;
+    } else if (timeSlot === 4) {
       nextClassName = "Lunch";
     } else if (timeSlot === 8) {
       nextClassName = "End of the day";
     } else {
       nextClassName = document.getElementById(timeSlot + 1).textContent;
     }
+
     nextClass.innerHTML = `<strong>${nextClassName}</strong> in <strong>${minutesLeft} minutes</strong>`;
   } catch (error) {
+    console.log(error);
     nextClass.innerHTML = `Nothing Yet`;
   }
+}
+
+function generateCalendar() {
+  const calendarElement = document.getElementById("calendar");
+  const today = new Date();
+  const month = today.getMonth();
+  const year = today.getFullYear();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const firstDay = new Date(year, month, 1).getDay();
+
+  let calendarHTML = "<table><tr>";
+  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  daysOfWeek.forEach((day) => {
+    calendarHTML += `<th>${day}</th>`;
+  });
+  calendarHTML += "</tr><tr>";
+
+  for (let i = 0; i < firstDay; i++) {
+    calendarHTML += "<td></td>";
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    if ((firstDay + day - 1) % 7 === 0) {
+      calendarHTML += "</tr><tr>";
+    }
+    if (day === today.getDate()) {
+      calendarHTML += `<td class="highlight">${day}</td>`;
+    } else {
+      calendarHTML += `<td>${day}</td>`;
+    }
+  }
+
+  calendarHTML += "</tr></table>";
+  calendarElement.innerHTML = calendarHTML;
 }
 
 function init() {
   currentDate.textContent = new Date().toDateString();
   fetchTimetable();
+  generateCalendar();
 }
 
 init();

@@ -185,12 +185,12 @@ header {
   animation: fadeIn 0.5s ease-out;
 }
 .sidebar nav ul li a:hover {
-  background: #34495e; 
-  padding-left: 30px; 
+  background: #34495e;
+  padding-left: 30px;
 }
 
 .sidebar nav ul li a.about {
-  font-weight: bold; 
+  font-weight: bold;
 }
 
 @keyframes fadeIn {
@@ -207,4 +207,36 @@ header {
 #lunch-box {
   background-color: #f39c12;
   color: #fff;
+}
+
+#calendar {
+  margin-top: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 100%;
+}
+
+#calendar table {
+  width: 100%;
+  border-collapse: collapse;
+  height: 85%;
+}
+
+#calendar th,
+#calendar td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+#calendar .highlight {
+  background-color: #2c3e50;
+  color: #fff;
+  font-weight: bold;
+}
+
+#calendar .highlight {
+  background-color: #2c3e50;
+  color: #fff;
+  font-weight: bold;
 }
