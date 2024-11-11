@@ -3,20 +3,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const subjectData = {};
   let branch, division;
 
-  const fetchSubjectDetails = (subjectName) => {
-    return fetch(`/api/subject/${subjectName}`)
+  const fetchSubjectDetails = () => {
+    fetch("/api/subjects")
       .then((response) => response.json())
-      .then((subjectDetails) => {
-        subjectData[subjectName] = subjectDetails;
-      });
+      .then((data) => {
+        for (const [key, value] of Object.entries(data[0])) {
+          subjectData[key] = value;
+        }
+      })
+      .catch((error) => {});
   };
+  fetchSubjectDetails();
 
   const updateSubjectCells = (subjects, subjectCells) => {
     subjects.forEach((subject) => {
       try {
         const [index, subjectName] = subject.split(" ");
         subjectCells[index].textContent = subjectName;
-        fetchSubjectDetails(subjectName);
       } catch (error) {}
     });
   };
@@ -68,13 +71,15 @@ document.addEventListener("DOMContentLoaded", () => {
     cell.addEventListener("mouseover", (event) => {
       const subject = event.target.innerText;
       if (subject !== "Free") {
-        const data = subjectData[subject];
-        hoverBox.innerHTML = `
+        try {
+          const data = subjectData[subject];
+          hoverBox.innerHTML = `
           <strong>${data.title}</strong> <br>
           Credits: <strong>${data.credit}</strong> <br>
           Lecturer: <strong>${data[branch] || data[division]}</strong> <br>
           Code: <strong>${data.code}</strong>
         `;
+        } catch (error) {}
       } else {
         hoverBox.innerHTML = "This class is free!<br><strong>Enjoy!</strong>";
       }

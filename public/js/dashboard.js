@@ -2,6 +2,8 @@ const nameElement = document.getElementById("name");
 const roll = document.getElementById("roll");
 const firstName = document.getElementById("first-name");
 const branchElement = document.getElementById("branch");
+const yearElement = document.getElementById("year");
+const divisionElement = document.getElementById("division");
 const currentDate = document.getElementById("current-date");
 const logoutBtn = document.getElementById("logout");
 const classes = Array.from(document.querySelectorAll(".class-item"));
@@ -21,6 +23,18 @@ let subjectData = {};
 let branch = "";
 let division = "";
 
+const fetchSubjectDetails = () => {
+  fetch("/api/subjects")
+    .then((response) => response.json())
+    .then((data) => {
+      for (const [key, value] of Object.entries(data[0])) {
+        subjectData[key] = value;
+      }
+    })
+    .catch((error) => {});
+};
+fetchSubjectDetails();
+
 logoutBtn.addEventListener("click", handleLogout);
 
 function handleLogout() {
@@ -35,6 +49,8 @@ function fetchUserData() {
       roll.textContent = data.roll;
       firstName.textContent = data.name.split(" ")[0];
       branchElement.textContent = data.branch;
+      divisionElement.textContent = data.division;
+      yearElement.textContent = data.year;
       branch = data.branch;
       division = data.division;
     });
@@ -66,11 +82,6 @@ function updateClassItems(data) {
       let [index, subjectName] = subject.split(" ");
       index = index >= 4 ? Number(index) + 1 : index;
       classes[index].textContent = subjectName;
-      fetch(`/api/subject/${subjectName}`)
-        .then((response) => response.json())
-        .then((subjectDetails) => {
-          subjectData[subjectName] = subjectDetails;
-        });
     } catch (error) {}
   });
 }
@@ -199,13 +210,13 @@ function fillCoursesList() {
         courseList.appendChild(subjectTitleAndCode);
 
         const subjectCredit = document.createElement("p");
-        subjectCredit.textContent = `Credits: ${value.credit}`;
+        subjectCredit.innerHTML = `Credits: <strong>${value.credit}</strong>`;
         courseList.appendChild(subjectCredit);
 
         const subjectLecturer = document.createElement("p");
-        subjectLecturer.textContent = `Lecturer: ${
+        subjectLecturer.innerHTML = `Lecturer: <strong>${
           value[branch] || value[division]
-        }`;
+        }<strong>`;
         courseList.appendChild(subjectLecturer);
       }
     });

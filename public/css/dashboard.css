@@ -260,4 +260,13 @@ header {
 
 h4 {
   color: #2c3e50;
+  font-size: large;
+}
+
+aside p span {
+  font-weight: bold;
+}
+
+#course-list strong {
+  color: #444;
 }

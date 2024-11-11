@@ -47,6 +47,26 @@ router.post("/auth/checkPassword", async (req, res) => {
   }
 });
 
+router.post("/auth/changePassword", async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  if (oldPassword === req.session.user.password) {
+    try {
+      const user = await User.findOneAndUpdate(
+        { username: req.session.user.username },
+        { password: newPassword },
+        { new: true }
+      );
+      req.session.user = user;
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.json({ success: false });
+    }
+  } else {
+    res.json({ success: false });
+  }
+});
+
 router.post("/auth/register", async (req, res) => {
   const { name, username, email, password, year, branch, roll, division } =
     req.body;

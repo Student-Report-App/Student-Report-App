@@ -42,6 +42,10 @@ router.get("/profile", (req, res) => {
   sendFileIfAuthenticated(req, res, "/../views/profile.html");
 });
 
+router.get("/changepassword", (req, res) => {
+  sendFileIfAuthenticated(req, res, "/../views/changepassword.html");
+});
+
 router.get("/about", (req, res) => {
   res.sendFile(path.join(__dirname, "/../views/about.html"));
 });
