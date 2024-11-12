@@ -33,7 +33,7 @@ router.post("/auth/checkEmail", async (req, res) => {
 });
 
 router.post("/auth/checkPassword", async (req, res) => {
-  const { login, password, loginType } = req.body;
+  const { login, password, loginType, checked } = req.body;
   let record;
   if (loginType === "email") {
     record = await User.findOne({ email: login });
@@ -42,6 +42,11 @@ router.post("/auth/checkPassword", async (req, res) => {
   }
   if (record.password === password) {
     req.session.user = record;
+    if (checked) {
+      req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 30; // 1 month
+    } else {
+      req.session.cookie.maxAge = 1000 * 60 * 60 * 24; // 24 hours
+    }
     res.json({ match: true });
   } else {
     res.json({ match: false });
