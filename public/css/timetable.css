@@ -78,13 +78,11 @@ h1 {
 }
 
 .subject,
-.subjectlab,
 .lunch {
   transition: all 0.3s ease;
 }
 
 .subject:hover,
-.subjectlab:hover,
 .lunch:hover {
   transform: scale(1.05);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -94,11 +92,6 @@ h1 {
 
 .subject {
   background: #ecf0f1;
-}
-
-.subjectlab {
-  background: #3498db;
-  color: white;
 }
 
 .lunch {
