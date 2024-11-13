@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
+const Announcement = require("../models/Announcement");
 
 router.post("/auth/login", async (req, res) => {
   if (req.session.user) {
@@ -101,6 +102,21 @@ router.post("/auth/updateData", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.json({ success: false });
+  }
+});
+
+router.post("/api/announcements", async (req, res) => {
+  const { announcement, dueDate } = req.body;
+  const newAnnouncement = new Announcement({
+    for: "all",
+    name: announcement,
+    at: new Date(dueDate),
+  });
+  try {
+    await newAnnouncement.save();
+    res.json({ success: true, announcement: newAnnouncement });
+  } catch (error) {
+    console.error("Error saving announcement:", error);
   }
 });
 

@@ -91,9 +91,12 @@
         </section>
 
         <section class="cards">
-          <div class="card Announcements">
+          <div class="card Announcements" style="position: relative">
             <h3><i class="fas fa-bullhorn"></i> Announcements</h3>
             <div id="announcement-list"></div>
+            <button id="addButton" class="add-button">
+              <span class="plus">+</span>
+            </button>
           </div>
           <div class="card courses">
             <h3><i class="fas fa-book"></i> Your Courses</h3>
@@ -105,6 +108,37 @@
           </div>
         </section>
       </main>
+    </div>
+    <div id="secretKeyModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Enter Secret Key</h2>
+        <input type="password" id="secretKeyInput" placeholder="Secret Key" />
+        <button id="submitSecretKey">Submit</button>
+        <div id="announcementSection">
+          <h2>Write Announcement</h2>
+          <textarea
+            id="announcementInput"
+            placeholder="Write your announcement here..."
+          ></textarea>
+          <h5>Due Date</h5>
+          <input
+            type="datetime-local"
+            id="dueDateInput"
+            placeholder="Due Date"
+          />
+          <h5>Select Branch/Division</h5>
+          <div>
+            <label><input type="checkbox" value="CSE" /> CSE</label>
+            <label><input type="checkbox" value="ECE" /> ECE</label>
+            <label><input type="checkbox" value="DSAI" /> DSAI</label>
+            <label><input type="checkbox" value="A1" /> A1</label>
+            <label><input type="checkbox" value="A2" /> A2</label>
+            <label><input type="checkbox" value="B" /> B</label>
+          </div>
+          <button id="submitAnnouncement">Submit Announcement</button>
+        </div>
+      </div>
     </div>
     <script src="js/dashboard.js"></script>
   </body>

@@ -233,11 +233,16 @@ function fillAnnouncementList() {
         const timeLeftString = formatTimeLeft(timeLeft);
         const exactTime = formatExactTime(atTime);
         const fullInformation = `<strong>${entry.name}</strong> in <strong>${timeLeftString}</strong> (${exactTime})`;
-        
+
         const announcementElement = document.createElement("p");
+        timeLeftString.includes("0d")
+          ? (announcementElement.style.color = "red")
+          : null;
         announcementElement.innerHTML = fullInformation;
         if (index === 0) {
-          document.getElementById("next-announcement").innerHTML = fullInformation;
+          const upcoming = document.getElementById("next-announcement");
+          upcoming.innerHTML = fullInformation;
+          timeLeftString.includes("0d") ? (upcoming.style.color = "red") : null;
         }
         announcementList.appendChild(announcementElement);
       });
@@ -246,13 +251,79 @@ function fillAnnouncementList() {
 
 function formatTimeLeft(timeLeft) {
   const daysLeft = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-  const hoursLeft = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const hoursLeft = Math.floor(
+    (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
   const minutesLeft = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
   return `${daysLeft}d ${hoursLeft}h ${minutesLeft}m`;
 }
 
 function formatExactTime(atTime) {
-  return atTime.toDateString().split(" ").slice(1, 3).join(" ") + " - " + atTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  return (
+    atTime.toDateString().split(" ").slice(1, 3).join(" ") +
+    " - " +
+    atTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+  );
+}
+
+document
+  .getElementById("addButton")
+  .addEventListener("click", handleAddButtonClick);
+document.querySelector(".close-button").addEventListener("click", closeModal);
+document
+  .getElementById("submitSecretKey")
+  .addEventListener("click", submitSecretKey);
+document
+  .getElementById("submitAnnouncement")
+  .addEventListener("click", submitAnnouncement);
+
+function handleAddButtonClick() {
+  document.getElementById("secretKeyModal").style.display = "block";
+}
+
+function closeModal() {
+  document.getElementById("secretKeyModal").style.display = "none";
+}
+
+function submitSecretKey() {
+  const secretKey = document.getElementById("secretKeyInput").value;
+  if (secretKey !== "1234") {
+    alert("Incorrect secret key. Please try again.");
+  }
+}
+
+function submitAnnouncement() {
+  const announcement = document.getElementById("announcementInput").value;
+  const dueDate = document.getElementById("dueDateInput").value;
+  if (announcement && dueDate) {
+    fetch("/api/announcements", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ announcement, dueDate }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.success) {
+          console.log("Announcement submitted:", data.announcement);
+          closeModal();
+          fillAnnouncementList();
+        } else {
+          console.error("Error submitting announcement:", data.error);
+        }
+      })
+      .catch((error) => {
+        console.error("Error submitting announcement:", error);
+      });
+  } else {
+    alert("Please write an announcement and enter a due date.");
+  }
 }
 
 function init() {
