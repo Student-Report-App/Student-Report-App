@@ -39,5 +39,5 @@ app.use((req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Your app is listening on port ${PORT}`);
+  console.log(`Your app is listening on http://localhost:${PORT}`);
 });
