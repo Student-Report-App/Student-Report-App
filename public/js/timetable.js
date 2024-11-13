@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
   let subjectData = {};
   let branch, division;
+  let fetchedSubjects = 0;
 
   const allSubjectsFilled = new Promise((resolve) => {
     resolveAllSubjectsFilled = resolve;
@@ -38,7 +39,8 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (error) {
       console.error(`Error fetching subjects for ${type} ${value}:`, error);
     }
-    if (type === "division") {
+    fetchedSubjects++;
+    if (fetchedSubjects === 2) {
       resolveAllSubjectsFilled();
     }
   };

@@ -114,6 +114,7 @@
         <span class="close-button">&times;</span>
         <h2>Enter Secret Key</h2>
         <input type="password" id="secretKeyInput" placeholder="Secret Key" />
+        <div id="secretKeyMessage"></div>
         <button id="submitSecretKey">Submit</button>
         <div id="announcementSection">
           <h2>Write Announcement</h2>
@@ -129,12 +130,30 @@
           />
           <h5>Select Branch/Division</h5>
           <div>
-            <label><input type="checkbox" value="CSE" /> CSE</label>
-            <label><input type="checkbox" value="ECE" /> ECE</label>
-            <label><input type="checkbox" value="DSAI" /> DSAI</label>
-            <label><input type="checkbox" value="A1" /> A1</label>
-            <label><input type="checkbox" value="A2" /> A2</label>
-            <label><input type="checkbox" value="B" /> B</label>
+            <label
+              ><input type="checkbox" value="CSE" class="announcement-check" />
+              CSE</label
+            >
+            <label
+              ><input type="checkbox" value="ECE" class="announcement-check" />
+              ECE</label
+            >
+            <label
+              ><input type="checkbox" value="DSAI" class="announcement-check" />
+              DSAI</label
+            >
+            <label
+              ><input type="checkbox" value="A1" class="announcement-check" />
+              A1</label
+            >
+            <label
+              ><input type="checkbox" value="A2" class="announcement-check" />
+              A2</label
+            >
+            <label
+              ><input type="checkbox" value="B" class="announcement-check" />
+              B</label
+            >
           </div>
           <button id="submitAnnouncement">Submit Announcement</button>
         </div>

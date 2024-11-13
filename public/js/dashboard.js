@@ -287,33 +287,53 @@ function closeModal() {
 
 function submitSecretKey() {
   const secretKey = document.getElementById("secretKeyInput").value;
-  if (secretKey !== "1234") {
-    alert("Incorrect secret key. Please try again.");
-  }
+  const secretKeyMessage = document.getElementById("secretKeyMessage");
+  fetch("/api/secretKey", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ secretKey }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        secretKeyMessage.style.color = "green";
+        secretKeyMessage.textContent =
+          "Secret key is correct. Please fill the data below.";
+      } else {
+        secretKeyMessage.style.color = "red";
+        secretKeyMessage.textContent =
+          "Secret key is incorrect. Please try again.";
+      }
+    })
+    .catch((error) => {
+      console.error("Error submitting secret key:", error);
+    });
 }
 
 function submitAnnouncement() {
   const announcement = document.getElementById("announcementInput").value;
   const dueDate = document.getElementById("dueDateInput").value;
+  const announcementChecks = document.querySelectorAll(".announcement-check");
+  const checkedValues = Array.from(announcementChecks)
+    .filter((check) => check.checked)
+    .map((check) => check.value);
+  console.log(checkedValues);
   if (announcement && dueDate) {
     fetch("/api/announcements", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ announcement, dueDate }),
+      body: JSON.stringify({ announcement, dueDate, checkedValues }),
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          console.log("Announcement submitted:", data.announcement);
+          console.log("Announcement submitted successfully");
           closeModal();
-          fillAnnouncementList();
+          window.location.reload();
         } else {
           console.error("Error submitting announcement:", data.error);
         }
