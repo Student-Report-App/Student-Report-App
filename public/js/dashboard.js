@@ -221,10 +221,45 @@ function fillCoursesList() {
       }
     });
 }
+
+function fillAnnouncementList() {
+  fetch("/api/announcements")
+    .then((response) => response.json())
+    .then((data) => {
+      const announcementList = document.getElementById("announcement-list");
+      data.forEach((entry, index) => {
+        const atTime = new Date(entry.at);
+        const timeLeft = atTime - new Date();
+        const timeLeftString = formatTimeLeft(timeLeft);
+        const exactTime = formatExactTime(atTime);
+        const fullInformation = `<strong>${entry.name}</strong> in <strong>${timeLeftString}</strong> (${exactTime})`;
+        
+        const announcementElement = document.createElement("p");
+        announcementElement.innerHTML = fullInformation;
+        if (index === 0) {
+          document.getElementById("next-announcement").innerHTML = fullInformation;
+        }
+        announcementList.appendChild(announcementElement);
+      });
+    });
+}
+
+function formatTimeLeft(timeLeft) {
+  const daysLeft = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+  const hoursLeft = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutesLeft = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+  return `${daysLeft}d ${hoursLeft}h ${minutesLeft}m`;
+}
+
+function formatExactTime(atTime) {
+  return atTime.toDateString().split(" ").slice(1, 3).join(" ") + " - " + atTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
 function init() {
   currentDate.textContent = new Date().toDateString();
   fetchTimetable();
   generateCalendar();
+  fillAnnouncementList();
   fillCoursesList();
 }
 
