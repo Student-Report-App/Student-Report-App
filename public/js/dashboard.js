@@ -9,6 +9,7 @@ const logoutBtn = document.getElementById("logout");
 const classes = Array.from(document.querySelectorAll(".class-item"));
 const hoverBox = document.getElementById("hover-box");
 const courseList = document.getElementById("course-list");
+let secretKeyCorrect = false;
 
 const days = [
   "Sunday",
@@ -42,7 +43,7 @@ function handleLogout() {
 }
 
 function fetchUserData() {
-  return fetch("/api/userdata")
+  return fetch("/api/userData")
     .then((response) => response.json())
     .then((data) => {
       nameElement.textContent = data.name;
@@ -301,6 +302,7 @@ function submitSecretKey() {
         secretKeyMessage.style.color = "green";
         secretKeyMessage.textContent =
           "Secret key is correct. Please fill the data below.";
+        secretKeyCorrect = true;
       } else {
         secretKeyMessage.style.color = "red";
         secretKeyMessage.textContent =
@@ -312,14 +314,7 @@ function submitSecretKey() {
     });
 }
 
-function submitAnnouncement() {
-  const announcement = document.getElementById("announcementInput").value;
-  const dueDate = document.getElementById("dueDateInput").value;
-  const announcementChecks = document.querySelectorAll(".announcement-check");
-  const checkedValues = Array.from(announcementChecks)
-    .filter((check) => check.checked)
-    .map((check) => check.value);
-  console.log(checkedValues);
+function submitAnnouncementData(announcement, dueDate, checkedValues) {
   if (announcement && dueDate) {
     fetch("/api/announcements", {
       method: "POST",
@@ -331,18 +326,42 @@ function submitAnnouncement() {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          console.log("Announcement submitted successfully");
           closeModal();
           window.location.reload();
         } else {
+          announcementMessage.style.color = "red";
+          announcementMessage.textContent =
+            "Error submitting announcement. Please try again.";
           console.error("Error submitting announcement:", data.error);
         }
       })
       .catch((error) => {
+        announcementMessage.style.color = "red";
+        announcementMessage.textContent =
+          "Error submitting announcement. Please try again.";
         console.error("Error submitting announcement:", error);
       });
   } else {
-    alert("Please write an announcement and enter a due date.");
+    announcementMessage.style.color = "red";
+    announcementMessage.textContent =
+      "Please write an announcement and enter a due date.";
+  }
+}
+
+function submitAnnouncement() {
+  const announcement = document.getElementById("announcementInput").value;
+  const dueDate = document.getElementById("dueDateInput").value;
+  const announcementChecks = document.querySelectorAll(".announcement-check");
+  const announcementMessage = document.getElementById("announcementMessage");
+  const checkedValues = Array.from(announcementChecks)
+    .filter((check) => check.checked)
+    .map((check) => check.value);
+  if (secretKeyCorrect) {
+    submitAnnouncementData(announcement, dueDate, checkedValues);
+  } else {
+    announcementMessage.style.color = "red";
+    announcementMessage.textContent =
+      "Please submit the correct secret key first.";
   }
 }
 

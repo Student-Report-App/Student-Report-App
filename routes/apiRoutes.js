@@ -5,7 +5,7 @@ const Subject = require("../models/Subject");
 const Book = require("../models/Book");
 const Announcement = require("../models/Announcement");
 
-router.get("/api/userdata", (req, res) => {
+router.get("/api/userData", (req, res) => {
   if (!req.session.user) {
     return res.redirect("/404");
   }

@@ -122,7 +122,7 @@ router.post("/api/announcements", async (req, res) => {
     const newAnnouncement = new Announcement({
       for: value,
       name: announcement,
-      at: new Date(dueDate),
+      at: new Date(new Date(dueDate).getTime() - 5.5 * 60 * 60 * 1000),
     });
     try {
       await newAnnouncement.save();
