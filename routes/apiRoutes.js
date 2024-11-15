@@ -6,6 +6,9 @@ const Book = require("../models/Book");
 const Announcement = require("../models/Announcement");
 
 router.get("/api/userData", (req, res) => {
+  const loggedinuser = require("../server.js");
+
+  req.session.user = loggedinuser;
   if (!req.session.user) {
     return res.redirect("/404");
   }

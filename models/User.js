@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema(
     branch: { type: String, required: true },
     roll: { type: Number, required: true },
     division: { type: String, required: true },
+    photo: { type: String, required: false },
   },
   { versionKey: false, collection: "Users" }
 );

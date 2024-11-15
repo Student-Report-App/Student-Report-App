@@ -3,23 +3,35 @@ const router = express.Router();
 const User = require("../models/User");
 const Announcement = require("../models/Announcement");
 const SecretKey = require("../models/SecretKey");
+const passport = require("passport");
+const loggedinuser = require("./getRoutes");
+
 
 router.post("/auth/login", async (req, res) => {
   if (req.session.user) {
-    res.redirect("/dashboard");
+    //res.redirect("/dashboard");
   } else {
     res.redirect("/404");
   }
 });
 
 router.post("/auth/logout", (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.status(500).send("Failed to destroy session");
+  req.logout((err) =>{
+    if(err){
+      return next(err);
     }
-    res.clearCookie("connect.sid");
-    res.redirect("/");
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).send("Failed to destroy session");
+      }
+      res.clearCookie("connect.sid");
+      res.redirect("/dashboard");
+    
+    });
+    
+    
   });
+  
 });
 
 router.post("/auth/checkUsername", async (req, res) => {
@@ -133,5 +145,6 @@ router.post("/api/announcements", async (req, res) => {
   });
   res.json({ success: true });
 });
+
 
 module.exports = router;

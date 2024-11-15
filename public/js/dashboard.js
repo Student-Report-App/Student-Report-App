@@ -39,7 +39,7 @@ fetchSubjectDetails();
 logoutBtn.addEventListener("click", handleLogout);
 
 function handleLogout() {
-  fetch("/auth/logout", { method: "POST" }).then(() => (location.href = "/"));
+  fetch("/auth/logout", { method: "POST" })
 }
 
 function fetchUserData() {
