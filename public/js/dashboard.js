@@ -246,8 +246,33 @@ function fillAnnouncementList() {
           timeLeftString.includes("0d") ? (upcoming.style.color = "red") : null;
         }
         announcementList.appendChild(announcementElement);
+
+        const addEventButton = document.createElement("button");
+        addEventButton.classList.add("addEventButton");
+        addEventButton.textContent = "Add to calendar";
+        addEventButton.addEventListener("click", () => {
+          addEventToCalendar(entry.name, atTime);
+        });
+        announcementList.appendChild(addEventButton);
       });
     });
+}
+
+function addEventToCalendar(name, atTime) {
+  const adjustedTime = new Date(atTime.getTime() + 5.5 * 60 * 60 * 1000);
+  const event = {
+    summary: encodeURIComponent(name),
+    start: encodeURIComponent(
+      adjustedTime.toISOString().replace(/[-:.Z]/g, "")
+    ),
+    end: encodeURIComponent(
+      new Date(adjustedTime.getTime() + 60 * 60 * 1000)
+        .toISOString()
+        .replace(/[-:.Z]/g, "")
+    ),
+  };
+  const url = `https://calendar.google.com/calendar/r/eventedit?&text=${event.summary}&dates=${event.start}/${event.end}`;
+  window.open(url, "_blank");
 }
 
 function formatTimeLeft(timeLeft) {

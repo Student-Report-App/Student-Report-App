@@ -8,7 +8,7 @@ router.post("/auth/login", async (req, res) => {
   if (req.session.user) {
     res.redirect("/dashboard");
   } else {
-    res.redirect("/404");
+    res.sendFile(path.join(__dirname, "/../views/404.html"));
   }
 });
 

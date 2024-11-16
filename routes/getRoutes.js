@@ -6,7 +6,7 @@ const sendFileIfAuthenticated = (req, res, filePath) => {
   if (req.session.user) {
     res.sendFile(path.join(__dirname, filePath));
   } else {
-    res.redirect("/404");
+    res.sendFile(path.join(__dirname, "/../views/404.html"));
   }
 };
 

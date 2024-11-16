@@ -293,8 +293,9 @@ aside p span {
 }
 
 .add-button:hover {
-  background-color: #357ae8;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  /* background-color: #357ae8; */
+  transform: scale(1.05);
+  /* box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); */
 }
 
 .add-button:focus {
@@ -347,7 +348,7 @@ aside p span {
 }
 
 #submitSecretKey {
-  background-color: #4285f4;
+  background-color: #2c3e50;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -357,7 +358,7 @@ aside p span {
 }
 
 #submitSecretKey:hover {
-  background-color: #357ae8;
+  transform: scale(1.05);
 }
 
 #announcementInput {
@@ -378,7 +379,7 @@ aside p span {
 }
 
 #submitAnnouncement {
-  background-color: #4285f4;
+  background-color: #2c3e50;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -388,7 +389,7 @@ aside p span {
 }
 
 #submitAnnouncement:hover {
-  background-color: #357ae8;
+  transform: scale(1.05);
 }
 
 #announcementSection h5 {
@@ -420,4 +421,24 @@ aside p span {
 
 #announcementSection input[type="checkbox"] {
   margin-right: 8px;
+}
+
+#announcementMessage {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.addEventButton {
+  background-color: #2c3e50;
+  font-weight: bold;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.addEventButton:hover {
+  transform: scale(1.05);
 }

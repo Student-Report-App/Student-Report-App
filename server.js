@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const path = require("path");
 
 const app = express();
 
@@ -34,7 +35,7 @@ app.use(getRoutes);
 app.use(postRoutes);
 
 app.use((req, res) => {
-  res.redirect("/404");
+  res.sendFile(path.join(__dirname, "views/404.html"));
 });
 
 const PORT = process.env.PORT || 3000;
