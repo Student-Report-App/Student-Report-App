@@ -247,15 +247,55 @@ function fillAnnouncementList() {
         }
         announcementList.appendChild(announcementElement);
 
+        announcementElement.addEventListener("mouseover", () => {
+          markEventToCalendar(entry.name, atTime);
+        });
+
+        announcementElement.addEventListener("mouseout", () => {
+          const calendarElement = document.getElementById("calendar");
+          const days = calendarElement.getElementsByTagName("td");
+          const dayToMark = atTime.getDate();
+
+          for (let day of days) {
+            if (day.textContent == dayToMark) {
+              day.style.transition = "all 0.3s";
+              day.style.backgroundColor = "";
+              day.title = "";
+              break;
+            }
+          }
+        });
+
+        const buttonContainer = document.createElement("div");
+        buttonContainer.style.display = "flex";
+        buttonContainer.style.justifyContent = "space-between";
+
         const addEventButton = document.createElement("button");
         addEventButton.classList.add("addEventButton");
         addEventButton.textContent = "Add to calendar";
         addEventButton.addEventListener("click", () => {
           addEventToCalendar(entry.name, atTime);
         });
-        announcementList.appendChild(addEventButton);
+        buttonContainer.appendChild(addEventButton);
+
+        announcementList.appendChild(buttonContainer);
       });
     });
+}
+
+function markEventToCalendar(name, atDate) {
+  const calendarElement = document.getElementById("calendar");
+  const days = calendarElement.getElementsByTagName("td");
+  const dayToMark = atDate.getDate();
+
+  for (let day of days) {
+    if (day.textContent == dayToMark) {
+      day.style.transition = "all 0.3s";
+      day.style.backgroundColor = "#16E838";
+      day.title = name;
+      break;
+    }
+  }
 }
 
 function addEventToCalendar(name, atTime) {
@@ -393,8 +433,8 @@ function submitAnnouncement() {
 function init() {
   currentDate.textContent = new Date().toDateString();
   fetchTimetable();
-  generateCalendar();
   fillAnnouncementList();
+  generateCalendar();
   fillCoursesList();
 }
 
