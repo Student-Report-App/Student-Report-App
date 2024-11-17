@@ -153,6 +153,7 @@ header {
 }
 
 .todays-classes .class-item {
+  width: 50px;
   display: inline-block;
   background-color: #ecf0f1;
   padding: 12px 30px;
@@ -457,4 +458,8 @@ aside p span {
 
 .markonCalender:hover {
   transform: scale(1.05);
+}
+
+#announcementMessage {
+  justify-self: center;
 }
