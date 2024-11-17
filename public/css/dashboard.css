@@ -135,8 +135,7 @@ header {
 }
 
 .card h3:hover {
-  color: #16a085;
-  transform: translateY(-5px);
+  transform: scale(1.025);
 }
 
 .todays-classes h3 {
@@ -462,4 +461,8 @@ aside p span {
 
 #announcementMessage {
   justify-self: center;
+}
+
+#secretKeyMessage {
+  margin-bottom: 5px;
 }

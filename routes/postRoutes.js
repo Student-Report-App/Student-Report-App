@@ -36,7 +36,8 @@ router.post("/auth/checkEmail", async (req, res) => {
 
 router.post("/auth/checkPassword", async (req, res) => {
   const { login, password, loginType, checked } = req.body;
-  const query = loginType === "email" ? { email: login } : { username: login };
+  const query = loginType === "Email" ? { email: login } : { username: login };
+  console.log(query);
   const record = await User.findOne(query);
   if (record && record.password === password) {
     req.session.user = record;
