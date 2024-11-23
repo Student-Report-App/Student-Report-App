@@ -97,7 +97,7 @@ router.get("/api/announcements", async (req, res) => {
         { at: { $gt: new Date() } },
       ],
     });
-    res.json(announcements);
+    res.json(announcements.sort((a, b) => new Date(a.at) - new Date(b.at)));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

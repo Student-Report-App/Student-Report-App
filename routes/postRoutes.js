@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../models/User");
 const Announcement = require("../models/Announcement");
 const SecretKey = require("../models/SecretKey");
+const path = require("path");
 
 router.post("/auth/login", async (req, res) => {
   if (req.session.user) {
@@ -37,7 +38,6 @@ router.post("/auth/checkEmail", async (req, res) => {
 router.post("/auth/checkPassword", async (req, res) => {
   const { login, password, loginType, checked } = req.body;
   const query = loginType === "Email" ? { email: login } : { username: login };
-  console.log(query);
   const record = await User.findOne(query);
   if (record && record.password === password) {
     req.session.user = record;
@@ -123,7 +123,7 @@ router.post("/api/announcements", async (req, res) => {
     const newAnnouncement = new Announcement({
       for: value,
       name: announcement,
-      at: new Date(new Date(dueDate).getTime() - 5.5 * 60 * 60 * 1000),
+      at: new Date(new Date(dueDate).getTime()),
     });
     try {
       await newAnnouncement.save();

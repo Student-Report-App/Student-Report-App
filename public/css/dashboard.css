@@ -466,3 +466,7 @@ aside p span {
 #secretKeyMessage {
   margin-bottom: 5px;
 }
+
+.courses {
+  min-height: 95%;
+}
