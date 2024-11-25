@@ -165,6 +165,11 @@ header {
   text-align: center;
   cursor: default;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+.todays-classes .class-item:hover {
+  transform: scale(1.05);
 }
 
 .hover-box {

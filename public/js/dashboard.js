@@ -236,7 +236,7 @@ function fillAnnouncementList() {
         const fullInformation = `<strong>${entry.name}</strong> in <strong>${timeLeftString}</strong> (${exactTime})`;
 
         const announcementElement = document.createElement("p");
-        timeLeftString.includes("0d")
+        timeLeftString.startsWith("0d")
           ? (announcementElement.style.color = "red")
           : null;
         announcementElement.innerHTML = fullInformation;
