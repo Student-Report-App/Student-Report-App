@@ -4,6 +4,7 @@ const User = require("../models/User");
 const Announcement = require("../models/Announcement");
 const SecretKey = require("../models/SecretKey");
 const path = require("path");
+const argon2 = require("argon2"); 
 
 router.post("/auth/login", async (req, res) => {
   if (req.session.user) {
@@ -39,7 +40,7 @@ router.post("/auth/checkPassword", async (req, res) => {
   const { login, password, loginType, checked } = req.body;
   const query = loginType === "Email" ? { email: login } : { username: login };
   const record = await User.findOne(query);
-  if (record && record.password === password) {
+  if (record && await argon2.verify(record.password, password)) { 
     req.session.user = record;
     req.session.cookie.maxAge = checked
       ? 1000 * 60 * 60 * 24 * 30
@@ -52,11 +53,12 @@ router.post("/auth/checkPassword", async (req, res) => {
 
 router.post("/auth/changePassword", async (req, res) => {
   const { oldPassword, newPassword } = req.body;
-  if (oldPassword === req.session.user.password) {
+  if (await argon2.verify(req.session.user.password, oldPassword)) { 
     try {
+      const hashedPassword = await argon2.hash(newPassword);
       const user = await User.findOneAndUpdate(
         { username: req.session.user.username },
-        { password: newPassword },
+        { password: hashedPassword },
         { new: true }
       );
       req.session.user = user;
@@ -73,11 +75,12 @@ router.post("/auth/changePassword", async (req, res) => {
 router.post("/auth/register", async (req, res) => {
   const { name, username, email, password, year, branch, roll, division } =
     req.body;
+  const hashedPassword = await argon2.hash(password); 
   const newUser = new User({
     name,
     username,
     email,
-    password,
+    password: hashedPassword,
     year,
     branch,
     roll,
