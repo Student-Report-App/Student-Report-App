@@ -243,7 +243,7 @@ function fillAnnouncementList() {
         if (index === 0) {
           const upcoming = document.getElementById("next-announcement");
           upcoming.innerHTML = fullInformation;
-          timeLeftString.includes("0d") ? (upcoming.style.color = "red") : null;
+          timeLeftString.startsWith("0d") ? (upcoming.style.color = "red") : null;
         }
         announcementList.appendChild(announcementElement);
 
