@@ -109,3 +109,27 @@ p {
   cursor: pointer;
   transition: all 0.3s ease;
 }
+
+.icon-link {
+  font-size: 24px;
+  margin: 0 10px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.icon-link.linkedin {
+  color: #0e76a8;
+}
+
+.icon-link.github {
+  color: #333333;
+}
+
+.icon-link.linkedin:hover {
+  color: #1a5276;
+  transform: scale(1.1);
+}
+
+.icon-link.github:hover {
+  color: #000000;
+  transform: scale(1.1);
+}
