@@ -56,6 +56,16 @@ const checkExists = async (type, value) => {
   }
 };
 
+const isDivisionPicked = () => {
+  const divisions = document.getElementsByName("division");
+  for (let i = 0; i < divisions.length; i++) {
+    if (divisions[i].checked) {
+      return true;
+    }
+  }
+  return false;
+};
+
 const initializeEventListeners = () => {
   fullName.addEventListener("input", updateUsernameAndEmail);
   roll.addEventListener("input", () => {
@@ -76,7 +86,8 @@ const initializeEventListeners = () => {
       fullName.value.trim() !== "" &&
       roll.value.trim() !== "" &&
       username.value.trim() !== "" &&
-      email.value.trim() !== ""
+      email.value.trim() !== "" &&
+      isDivisionPicked()
     ) {
       const isUsernameTaken = await checkExists(
         "Username",
@@ -86,7 +97,7 @@ const initializeEventListeners = () => {
       if (!isUsernameTaken && !isEmailTaken)
         document.getElementById("register-form").submit();
     } else {
-      errorMessage.innerText = "Please fill in all fields.";
+      errorMessage.innerText = "Please fill in all fields";
     }
   });
 };
