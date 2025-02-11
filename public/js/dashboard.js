@@ -162,7 +162,7 @@ function highlightCurrentClass() {
 
     nextClass.innerHTML = `<strong>${nextClassName}</strong> in <strong>${minutesLeft} minutes</strong>`;
   } catch (error) {
-    nextClass.innerHTML = `Nothing Yet`;
+    nextClass.innerHTML = "Nothing Yet";
   }
 }
 

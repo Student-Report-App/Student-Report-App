@@ -56,10 +56,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const email = document.getElementById("email").value;
     const roll = document.getElementById("roll").value;
     const division = document.querySelector(
-      `input[name="division"]:checked`,
+      'input[name="division"]:checked',
     ).value;
-    const branch = document.querySelector(`input[name="branch"]:checked`).value;
-    const year = document.querySelector(`input[name="year"]:checked`).value;
+    const branch = document.querySelector('input[name="branch"]:checked').value;
+    const year = document.querySelector('input[name="year"]:checked').value;
 
     let usernameExists = false;
     let emailExists = false;
