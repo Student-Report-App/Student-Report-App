@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema(
     roll: { type: Number, required: true },
     division: { type: String, required: true },
   },
-  { versionKey: false, collection: "Users" }
+  { versionKey: false, collection: "Users" },
 );
 
 const User = mongoose.model("User", userSchema);
