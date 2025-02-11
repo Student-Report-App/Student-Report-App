@@ -6,7 +6,7 @@ const announcementSchema = new mongoose.Schema(
     name: { type: String, required: true },
     at: { type: Date, required: true },
   },
-  { versionKey: false, collection: "Announcements" }
+  { versionKey: false, collection: "Announcements" },
 );
 
 const Announcement = mongoose.model("Announcement", announcementSchema);

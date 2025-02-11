@@ -243,7 +243,9 @@ function fillAnnouncementList() {
         if (index === 0) {
           const upcoming = document.getElementById("next-announcement");
           upcoming.innerHTML = fullInformation;
-          timeLeftString.startsWith("0d") ? (upcoming.style.color = "red") : null;
+          timeLeftString.startsWith("0d")
+            ? (upcoming.style.color = "red")
+            : null;
         }
         announcementList.appendChild(announcementElement);
 
@@ -303,12 +305,12 @@ function addEventToCalendar(name, atTime) {
   const event = {
     summary: encodeURIComponent(name),
     start: encodeURIComponent(
-      adjustedTime.toISOString().replace(/[-:.Z]/g, "")
+      adjustedTime.toISOString().replace(/[-:.Z]/g, ""),
     ),
     end: encodeURIComponent(
       new Date(adjustedTime.getTime() + 60 * 60 * 1000)
         .toISOString()
-        .replace(/[-:.Z]/g, "")
+        .replace(/[-:.Z]/g, ""),
     ),
   };
   const url = `https://calendar.google.com/calendar/r/eventedit?&text=${event.summary}&dates=${event.start}/${event.end}`;
@@ -318,7 +320,7 @@ function addEventToCalendar(name, atTime) {
 function formatTimeLeft(timeLeft) {
   const daysLeft = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
   const hoursLeft = Math.floor(
-    (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
   );
   const minutesLeft = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
   return `${daysLeft}d ${hoursLeft}h ${minutesLeft}m`;

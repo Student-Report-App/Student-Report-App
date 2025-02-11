@@ -13,7 +13,7 @@ const subjectDetailsSchema = new mongoose.Schema(
     A2: String,
     B: String,
   },
-  { _id: false }
+  { _id: false },
 );
 
 const subjectSchema = new mongoose.Schema(
@@ -30,7 +30,7 @@ const subjectSchema = new mongoose.Schema(
     SHV: subjectDetailsSchema,
     EVS: subjectDetailsSchema,
   },
-  { versionKey: false, collection: "Subjects" }
+  { versionKey: false, collection: "Subjects" },
 );
 
 const Subject = mongoose.model("Subject", subjectSchema);

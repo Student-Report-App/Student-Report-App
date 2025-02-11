@@ -18,7 +18,7 @@ app.use(
       secure: false,
       sameSite: "strict",
     },
-  })
+  }),
 );
 
 mongoose

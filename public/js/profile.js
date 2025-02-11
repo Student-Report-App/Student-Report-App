@@ -20,13 +20,12 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("email").value = data.email;
     document.getElementById("roll").value = data.roll;
     document.querySelector(
-      `input[name="branch"][value="${data.branch}"]`
+      `input[name="branch"][value="${data.branch}"]`,
     ).checked = true;
+    document.querySelector(`input[name="year"][value="${data.year}"]`).checked =
+      true;
     document.querySelector(
-      `input[name="year"][value="${data.year}"]`
-    ).checked = true;
-    document.querySelector(
-      `input[name="division"][value="${data.division}"]`
+      `input[name="division"][value="${data.division}"]`,
     ).checked = true;
     originalUsername = data.username;
     originalEmail = data.email;
@@ -57,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const email = document.getElementById("email").value;
     const roll = document.getElementById("roll").value;
     const division = document.querySelector(
-      `input[name="division"]:checked`
+      `input[name="division"]:checked`,
     ).value;
     const branch = document.querySelector(`input[name="branch"]:checked`).value;
     const year = document.querySelector(`input[name="year"]:checked`).value;

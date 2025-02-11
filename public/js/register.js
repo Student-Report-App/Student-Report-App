@@ -91,7 +91,7 @@ const initializeEventListeners = () => {
     ) {
       const isUsernameTaken = await checkExists(
         "Username",
-        username.value.trim()
+        username.value.trim(),
       );
       const isEmailTaken = await checkExists("Email", email.value.trim());
       if (!isUsernameTaken && !isEmailTaken)

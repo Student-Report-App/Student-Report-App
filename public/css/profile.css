@@ -68,7 +68,9 @@ button[type="submit"] {
   padding: 10px 15px;
   border-radius: 4px;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s;
+  transition:
+    background 0.3s ease,
+    transform 0.3s;
   width: 100%;
   font-size: 16px;
 }
@@ -90,7 +92,9 @@ button[type="submit"]:hover {
   margin-top: 20px;
   display: block;
   width: 100%;
-  transition: background 0.3s ease, transform 0.3s;
+  transition:
+    background 0.3s ease,
+    transform 0.3s;
 }
 
 .go-back-btn:hover {

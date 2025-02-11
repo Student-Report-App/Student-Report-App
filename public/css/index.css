@@ -113,7 +113,9 @@ body {
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s;
+  transition:
+    background 0.3s ease,
+    transform 0.3s;
   width: 100%;
 }
 

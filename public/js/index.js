@@ -55,9 +55,9 @@ const handleLogin = async (e) => {
     const password = document.getElementById("password").value.trim();
     const passwordMatched = await passwordMatch(
       login,
-      password, 
+      password,
       loginType,
-      remember.checked
+      remember.checked,
     );
     if (passwordMatched) {
       document.getElementById("login-form").submit();
