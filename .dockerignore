@@ -1,0 +1,13 @@
+# Git files
+.git
+.gitignore
+
+# Node.js dependencies
+node_modules
+
+# Environment files (handled by docker-compose)
+.env
+
+# Docker files
+Dockerfile
+docker-compose.yml
